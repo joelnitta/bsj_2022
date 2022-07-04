@@ -7,6 +7,7 @@ format:
     reference-location: document
     css: styles.css
     slide-number: true
+    self-contained: true
 ---
 
 ```{r}
@@ -61,30 +62,28 @@ ISMB EvolComGen COSI 2022-07-14
 
 ## Harnessing open data to build maximally-sampled trees
 
-:::: {.columns}
+::::: {.columns}
 
-::: {.column width="65%"}
-
+:::: {.column width="65%"}
 Automated pipelines:
 
 - pyPHLAWD [@Smith2019]
 - superSMART [@Antonelli2016]
 - superCRUNCH [@Portik2020]
 - others...
-:::
-
-::: {.column width="10%"}
-:::
-
-::: {.column width="25%"}
-![](images/supersmart.png){height="400"}
-
-<span style = 'font-size: 50%;'>Antonelli et al. 2016</span>
-:::
-
 ::::
 
-## Probem 1: tradeoff between scalability and accuracy
+:::: {.column width="10%"}
+::::
+
+:::: {.column width="25%" .small}
+![](images/supersmart.png){height="400"}
+@Antonelli2016
+::::
+
+:::::
+
+## Problem 1: tradeoff between scalability and accuracy
 
 - Any automated pipeline must make **shortcuts** and **assumptions**
 
@@ -114,7 +113,7 @@ Goal: construct a pipeline to generate a **maximally sampled**, **high taxonomic
 
 A large, diverse, ecologically important group of plants
 
-But much more tractable than seed plants (angiosperms):
+Much more tractable than seed plants (angiosperms):
 
 - Ferns: ca. 12,000 species, 40-50% sequenced
 
@@ -131,12 +130,6 @@ But much more tractable than seed plants (angiosperms):
 ::: {.r-stack}
 ![](images/genbank_ferns.png){height="550"}
 :::
-
-## Building materials
-
-- Sanger-sequenced plastid genes: maximal sampling of species (**few genes, many taxa**)
-
-- NGS plastomes: robust resolution of backbone (**many genes, few taxa**)
 
 # Methods
 
