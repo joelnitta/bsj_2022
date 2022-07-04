@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>An Open and Continuously Updated Fern Tree of Life (FTOL)</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Joel Nitta" />
+    <meta name="date" content="2022-07-14" />
+    <script src="libs/header-attrs-2.14/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+&lt;style type="text/css"&gt;
+.black_bg {
+  background-color: #202020;
+}
+&lt;/style&gt;
+
+## An Open and Continuously Updated Fern Tree of Life (FTOL)
+
+**Joel Nitta&lt;sup&gt;1&lt;/sup&gt;**, Eric Schuettpelz&lt;sup&gt;2&lt;/sup&gt;, Santiago Ramírez-Barahona&lt;sup&gt;3&lt;/sup&gt;,  
+Wataru Iwasaki&lt;sup&gt;1&lt;/sup&gt;
+
+&lt;span style = 'font-size: 60%;'&gt;1: The University of Tokyo, 2: Smithsonian Institution, 3: Universidad Nacional Autónoma de México&lt;/span&gt;
+
+ISMB 2022 EvolComGen COSI 2022-07-14
+
+https://joelnitta.github.io/ismb_2022
+
+---
+## We are awash in DNA sequence data
+
+.center[
+&lt;img src="images/genbank_growth.png" alt="Image of exponential growth of data in GenBank" height="400"/&gt;
+]
+
+.footnote[
+  (Gauthier2019?)
+]
+
+---
+## Harnessing open data to build maximally-sampled trees
+
+.pull-left[
+Automated pipelines:
+
+- pyPHLAWD (Smith and Walker 2019)
+- superSMART (Antonelli et al. 2016)
+- superCRUNCH (Portik and Wiens 2020)
+- others...
+]
+
+.pull-right[
+  .center[
+    &lt;img src="images/supersmart.png" alt="drawing" height="400"/&gt;
+    &lt;br&gt;
+    &lt;span style = 'font-size: 60%;'&gt;Antonelli et al. (2016) &lt;/span&gt;
+  ]
+]
+
+---
+## The problem: tradeoff between scalability and accuracy
+
+- Any automated pipeline must make **shortcuts** and **assumptions**
+
+- **Manual inspection** of all sequences would lead to high-quality results, **but does not scale**
+
+.center[
+&lt;img src="images/Kane-Balance-Tradeoffs-Socia-Media-1200-382x255.jpg" alt="Image of balancing rocks copyright Anatoli Styf https://sloanreview.mit.edu/article/balancing-tradeoffs-in-social-media/" height="300"/&gt;
+]
+
+---
+## Our approach: combine automation with customization
+
+Goal: to construct a **maximally sampled**, **high taxonomic quality** phylogeny of **ferns**
+
+---
+## Why ferns?
+
+A large, diverse, ecologically important group of plants
+
+But much more tractable than seed plants (angiosperms):
+- Ferns: ca. 12,000 species, 40-50% sequenced
+- Seed plants: ca. 350,000 species, 20% sequenced
+
+---
+## Fern sequences in GenBank, 1990-2021
+
+Sanger sequenced plastid genes have been the workhorse of fern molecular systematics
+
+NGS (whole-genome sequencing) is gradually catching up
+
+&lt;!-- MS fig 1 --&gt;
+
+---
+## Building materials
+
+- Sanger-sequenced plastid genes: maximal sampling of species (**few genes, many taxa**)
+
+- NGS plastomes: robust resolution of backbone (**many genes, few taxa**)
+
+---
+class: inverse, center, middle
+
+# Methods
+
+---
+## Overview of workflow
+
+&lt;!-- workflow fig --&gt;
+
+---
+## Workflow highlights
+
+- Increase efficiency and reproducibility of working with GenBank data by creating a **local DB**
+- Extract sequences **without relying on GenBank annotations**
+- Implement a **custom fern taxonomy**
+- Use **two-step phylogenetic analysis** to maximize accuracy and sampling
+- Incorporate **automated** and **manual** checks for rogues
+
+---
+## Increase efficiency and reproducibility of working with GenBank data by creating local DB
+
+[restez](https://github.com/ropensci/restez)\* R package
+
+- Download portion ("plants" division) of GenBank from FTP site (v249, cutoff date 2022-04-15, ca. 170 gb)
+- Put only fern and outgroup sequences into local DB (mariaDB, ca. 400 mb)
+- Post DB in [figshare](https://figshare.com/articles/dataset/Fern_Tree_of_Life_FTOL_input_data/19474316) so others can use
+
+.footnote[\*I am current maintainer; if you have questions, please ask!]
+
+---
+## Extract sequences without relying on GenBank annotations
+
+There is **no standard** for how to annotate GenBank accessions
+
+- Curate set of reference sequences (one sequence per genus) based on well-annotated accessions
+- Use these as a BLAST DB to extract matching regions from each fern accession with superCRUNCH (Portik and Wiens 2020)
+
+---
+## Implement a custom fern taxonomy
+
+NCBI species names include many **synonyms**
+
+- Used [Catalog of Life](https://www.catalogueoflife.org/) as basis for new, fern-specific taxonomic database, [pteridocat](https://github.com/fernphy/pteridocat)
+  - Built database with [dwctaxon](https://github.com/joelnitta/dwctaxon)\* R package (handles taxonomic data in compliance with [Darwin Core](https://dwc.tdwg.org/terms/#taxon) standard)
+
+- Resolved GenBank species names to pteridocat using [taxastand](https://github.com/joelnitta/taxastand)\* R package
+  - Matches taxonomic names to a custom database, while accounting for spelling differences and taxonomic idiosyncrasies
+
+.footnote[\*I am the developer; if you have questions, please ask!]
+
+---
+## Use two-step phylogenetic analysis to maximize accuracy and sampling
+
+Step 1: Plastome backbone (423 species x 79 loci)
+
+Step 2: Use plastome backbone as constraint tree for analysis of Sanger dataset (5,582 species x 7 loci)
+
+(also tried supermatrix, but this was much slower: ca. 1 month vs. 10 days)
+
+---
+## Incorporate automated and manual checks for rogues
+
+Automated
+- All-by-all BLAST
+- Exclude any sequences that matched the wrong family
+
+Manual
+- Construct initial tree in "fast" mode with IQ-TREE (Nguyen et al. 2015)
+- Analyze monophyly (genus level and higher) with MonoPhy R package (Schwery and O’Meara 2016)
+- Consult with taxonomic experts
+- Curate exclusion list of accessions to avoid
+
+---
+class: inverse, center, middle
+
+# Results
+
+---
+background-image: url(images/cov_tree.png)
+background-size: contain
+
+## FTOL v1.1.0
+
+---
+background-image: url(images/bs_tree.png)
+background-size: contain
+class: inverse, black_bg
+
+## FTOL v1.1.0
+
+
+
+
+---
+## Revising the timeline of fern diversification
+
+- We conducted dating analysis (penalized likelihood with treePL (Smith and O’Meara 2012)) using 51 fossils (2x more than previous)
+- Pushes back stem ages for most families ca. 50 my
+- Suggests ferns did not diversify "in the shadow" of angiosperms
+
+---
+## Web portal
+
+https://fernphy.github.io/
+
+- Data downloads
+- Shiny app for exploring data
+
+&lt;!-- web site screen shot --&gt;
+
+---
+## R package "ftolr"
+
+https://github.com/fernphy/ftolr
+
+- Read tree and data (alignments) directly into R
+- Options for outgroups, rooting, locus selection, etc.
+
+&lt;!-- ftolr screen shot --&gt;
+
+---
+## Community involvement
+
+Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) between v1.0.0 and v1.1.0
+- Implemented "inclusion list" (preferred accessions for some species) based on recent phylogeny (Patel et al. 2019)
+- Number of non-monophyletic genera **dropped from 16 to 7**
+
+---
+class: inverse, center, middle
+
+# Summary
+
+---
+## FTOL hits sweet spot between automation and customization
+
+- Automated, versioned mining of GenBank data
+
+- Open data, methods, and results
+
+- Custom taxonomy tailored for ferns
+
+- Input from taxonomic experts and broader community
+
+---
+## Future directions
+
+- Completion of FTOL
+   
+   - "Unlocking the vault" of **herbarium specimens** via plastome skimming
+
+- Integration with **Pteridophyte Phylogeny Group II**
+    
+    - Species-level, community-driven, living taxonomy
+
+- Continue to provide tools (R packages) towards building **TOL**
+
+---
+## Acknowledgements
+
+Japan Society for the Promotion of Science
+
+Smithsonian National Museum of Natural History Peter Buck Fellowship
+
+Members of the Iwasaki lab, The University of Tokyo
+
+A.E. White
+
+S. Fawcett
+
+M. Hassler
+
+---
+## References
+
+.small[
+  Antonelli, A., H. Hettling, F. L. Condamine, K. Vos, R. H. Nilsson, M.
+J. Sanderson, H. Sauquet, R. Scharn, D. Silvestro, M. Töpel, C. D.
+Bacon, B. Oxelman, and R. A. Vos. 2016. Toward a self-updating platform
+for estimating rates of speciation and migration, ages, and
+relationships of taxa. Systematic Biology 66:152–166.
+
+Nguyen, L.-T., H. A. Schmidt, A. von Haeseler, and B. Q. Minh. 2015.
+IQ-TREE: A fast and effective stochastic algorithm for estimating
+maximum-likelihood phylogenies. Molecular Biology and Evolution
+32:268–274.
+
+Patel, N., S. Fawcett, M. Sundue, and J. M. Budke. 2019. Evolution of
+perine morphology in the Thelypteridaceae. International Journal of
+Plant Sciences 180:1016–1035.
+
+Portik, D. M., and J. J. Wiens. 2020. SuperCRUNCH: A bioinformatics
+toolkit for creating and manipulating supermatrices and other large
+phylogenetic datasets. Methods in Ecology and Evolution 11:763–772.
+
+Schwery, O., and B. C. O’Meara. 2016. MonoPhy: a simple R package to
+find and visualize monophyly issues. PeerJ Computer Science 2:e56.
+
+Smith, S. A., and B. C. O’Meara. 2012. treePL: divergence time
+estimation using penalized likelihood for large phylogenies.
+Bioinformatics 28:2689–2690.
+
+Smith, S. A., and J. F. Walker. 2019. PyPHLAWD: A python tool for
+phylogenetic dataset construction. Methods in Ecology and Evolution
+10:104–108.
+]
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,205 @@
+references:
+- id: Antonelli2016
+  accessed:
+  - year: 2020
+    month: 6
+    day: 19
+  author:
+  - family: Antonelli
+    given: Alexandre
+  - family: Hettling
+    given: Hannes
+  - family: Condamine
+    given: Fabien L.
+  - family: Vos
+    given: Karin
+  - family: Nilsson
+    given: R. Henrik
+  - family: Sanderson
+    given: Michael J.
+  - family: Sauquet
+    given: Hervé
+  - family: Scharn
+    given: Ruud
+  - family: Silvestro
+    given: Daniele
+  - family: Töpel
+    given: Mats
+  - family: Bacon
+    given: Christine D.
+  - family: Oxelman
+    given: Bengt
+  - family: Vos
+    given: Rutger A.
+  citation-key: Antonelli2016
+  container-title: Systematic Biology
+  container-title-short: Syst Biol
+  DOI: 10.1093/sysbio/syw066
+  ISSN: 1063-5157, 1076-836X
+  issued:
+  - year: 2016
+    month: 9
+    day: 10
+  language: en
+  page: 152–166
+  source: DOI.org (Crossref)
+  title: Toward a self-updating platform for estimating rates of speciation and migration,
+    ages, and relationships of taxa
+  type: article-journal
+  volume: '66'
+- id: Nguyen2015
+  author:
+  - family: Nguyen
+    given: Lam-Tung
+  - family: Schmidt
+    given: Heiko A.
+  - family: Haeseler
+    given: Arndt
+    non-dropping-particle: von
+  - family: Minh
+    given: Bui Quang
+  citation-key: Nguyen2015
+  container-title: Molecular Biology and Evolution
+  DOI: 10.1093/molbev/msu300
+  ISSN: '15371719'
+  issue: '1'
+  issued:
+  - year: 2015
+  page: 268-274
+  title: 'IQ-TREE: A fast and effective stochastic algorithm for estimating maximum-likelihood
+    phylogenies'
+  type: article-journal
+  volume: '32'
+- id: Patel2019
+  accessed:
+  - year: 2022
+    month: 5
+    day: 2
+  author:
+  - family: Patel
+    given: Nikisha
+  - family: Fawcett
+    given: Susan
+  - family: Sundue
+    given: Michael
+  - family: Budke
+    given: Jessica M.
+  citation-key: Patel2019
+  container-title: International Journal of Plant Sciences
+  container-title-short: International Journal of Plant Sciences
+  DOI: 10.1086/705588
+  ISSN: 1058-5893, 1537-5315
+  issue: '9'
+  issued:
+  - year: 2019
+    month: 11
+  language: en
+  page: 1016-1035
+  source: DOI.org (Crossref)
+  title: Evolution of perine morphology in the Thelypteridaceae
+  type: article-journal
+  URL: https://www.journals.uchicago.edu/doi/10.1086/705588
+  volume: '180'
+- id: Portik2020
+  accessed:
+  - year: 2021
+    month: 10
+    day: 18
+  author:
+  - family: Portik
+    given: Daniel M.
+  - family: Wiens
+    given: John J.
+  citation-key: Portik2020
+  container-title: Methods in Ecology and Evolution
+  DOI: 10.1111/2041-210x.13392
+  editor:
+  - family: Orme
+    given: David
+  ISSN: 2041-210X, 2041-210X
+  issue: '6'
+  issued:
+  - year: 2020
+    month: 6
+  language: en
+  page: 763-772
+  source: DOI.org (Crossref)
+  title: 'SuperCRUNCH: A bioinformatics toolkit for creating and manipulating supermatrices
+    and other large phylogenetic datasets'
+  title-short: SuperCRUNCH
+  type: article-journal
+  volume: '11'
+- id: Schwery2016
+  accessed:
+  - year: 2022
+    month: 2
+    day: 4
+  author:
+  - family: Schwery
+    given: Orlando
+  - family: O’Meara
+    given: Brian C.
+  citation-key: Schwery2016
+  container-title: PeerJ Computer Science
+  DOI: 10.7717/peerj-cs.56
+  ISSN: 2376-5992
+  issued:
+  - year: 2016
+    month: 3
+    day: 30
+  language: en
+  page: e56
+  source: DOI.org (Crossref)
+  title: 'MonoPhy: a simple R package to find and visualize monophyly issues'
+  title-short: '*MonoPhy*'
+  type: article-journal
+  volume: '2'
+- id: Smith2012
+  author:
+  - family: Smith
+    given: Stephen A
+  - family: O'Meara
+    given: Brian C.
+  citation-key: Smith2012
+  container-title: Bioinformatics
+  DOI: 10.1093/bioinformatics/bts492
+  ISSN: '13674803'
+  issue: '20'
+  issued:
+  - year: 2012
+  page: 2689-2690
+  PMID: '22908216'
+  title: 'treePL: divergence time estimation using penalized likelihood for large
+    phylogenies'
+  type: article-journal
+  volume: '28'
+- id: Smith2019
+  accessed:
+  - year: 2022
+    month: 6
+    day: 16
+  author:
+  - family: Smith
+    given: Stephen A.
+  - family: Walker
+    given: Joseph F.
+  citation-key: Smith2019
+  container-title: Methods in Ecology and Evolution
+  container-title-short: Methods Ecol Evol
+  DOI: 10.1111/2041-210X.13096
+  editor:
+  - family: Cooper
+    given: Natalie
+  ISSN: 2041-210X, 2041-210X
+  issue: '1'
+  issued:
+  - year: 2019
+    month: 1
+  language: en
+  page: 104-108
+  source: DOI.org (Crossref)
+  title: 'PyPHLAWD: A python tool for phylogenetic dataset construction'
+  title-short: 'Py '
+  type: article-journal
+  URL: https://onlinelibrary.wiley.com/doi/10.1111/2041-210X.13096
+  volume: '10'
