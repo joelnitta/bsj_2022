@@ -58,7 +58,7 @@ ISMB EvolComGen COSI 2022-07-14
 ![](images/genbank_growth.png){height="400"}
 :::
 
-[@Gauthier2019]
+@Gauthier2019
 
 ## Harnessing open data to build maximally-sampled trees
 
@@ -306,9 +306,12 @@ FTOL v1.1.0
 
 ## Revisiting the timeline of fern diversification
 
-- Conducted dating analysis with treePL [@Smith2012] using 51 fossils (2x more than previous)
-- Pushes back stem ages for most families ca. 50 my
-- Suggests ferns did not diversify "in the shadow" of angiosperms
+- Dated with treePL [@Smith2012] using 51 fossils (**2x more than previous**)
+- Pushes back stem ages for most families ca. 10-30 my
+- Suggests ferns **did not diversify "in the shadow" of angiosperms**
+
+---
+## {background-image="images/stem_ages.png" background-size="contain"}
 
 ## Web portal
 
