@@ -1,3 +1,3 @@
 library(rmdref)
 
-filter_refs_yaml("index.Rmd", "main_library.yaml", "references.yaml")
+filter_refs_yaml("index.qmd", "main_library.yaml", "references.yaml")
