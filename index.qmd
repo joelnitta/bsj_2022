@@ -26,7 +26,9 @@ library(ape)
 library(fontawesome)
 ```
 
-## An Open and Continuously<br>Updated Fern Tree of Life<br>(FTOL) {background-image="images/background.png" background-size="contain" background-color="#191919"}
+# Introduction {visibility="hidden"}
+
+## An Open and Continuously <br>Updated Fern Tree of Life<br>(FTOL) {background-image="images/background.png" background-size="contain" background-color="#191919"}
 
 :::: {.columns}
 
@@ -50,7 +52,24 @@ ISMB EvolComGen COSI 2022-07-14
 
 ::::
 
-## We are awash in DNA sequence data
+## Building the Tree of Life (TOL): <br>a major goal of biology since Darwin
+
+:::: {.columns}
+
+::: {.column width="50%" .medium}
+![](images/darwin_tree.png){height="400"}  
+@Darwin1859
+:::
+
+
+::: {.column width="50%" .medium}
+![](images/big_tree.png){height="400"}  
+@Hinchliff2015
+:::
+
+::::
+
+## Growth of data on GenBank means TOL may be possible... 
 
 <br>
 
@@ -58,19 +77,19 @@ ISMB EvolComGen COSI 2022-07-14
 ![](images/genbank_growth.png){height="400"}
 :::
 
-@Gauthier2019
 
-## Harnessing open data to build maximally-sampled trees
+::: {.medium}
+@Gauthier2019
+:::
+
+## ...using automated pipelines
 
 ::::: {.columns}
 
 :::: {.column width="65%"}
-Automated pipelines:
-
 - pyPHLAWD [@Smith2019]
 - superSMART [@Antonelli2016]
 - superCRUNCH [@Portik2020]
-- others...
 ::::
 
 :::: {.column width="10%"}
@@ -282,7 +301,7 @@ bs_histogram <- ggplot(support_counts, aes(x = bin_start, y = count, fill = bin_
     y = "Count",
     fill = "BS"
   ) +
-  dark_theme_gray(base_size = 16) +
+  dark_theme_gray(base_size = 24) +
   theme(
     plot.subtitle = element_markdown(),
     panel.background = element_rect(fill = "grey10", colour = NA),
@@ -347,13 +366,13 @@ Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) betwee
 
 # Summary
 
-## FTOL hits sweet spot between **automation** and **customization**
+## FTOL hits sweet spot between automation and customization
 
 - Automated, versioned mining of GenBank data
 
-- Open data, methods, and results
-
 - Custom taxonomy tailored for ferns
+
+- Open data, methods, and results
 
 - Input from taxonomic experts and broader community
 
@@ -366,6 +385,8 @@ Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) betwee
 - Integration with **Pteridophyte Phylogeny Group II**
     
     - Species-level, community-driven, living taxonomy
+
+- Transition to **phylogenomics** for all species
 
 - Continue to provide tools (R packages) towards building **TOL**
 
