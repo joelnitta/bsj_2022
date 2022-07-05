@@ -41,7 +41,7 @@ Wataru Iwasaki<sup>1</sup>
 
 :::: {.small}
 1: The University of Tokyo, 2: Smithsonian Institution, 3: Universidad Nacional Autónoma de México  
-ISMB EvolComGen COSI 2022-07-14  
+ISMB EvolCompGen COSI 2022-07-13  
 [https://joelnitta.github.io/ismb_2022](https://joelnitta.github.io/ismb_2022)
 ::::
 
