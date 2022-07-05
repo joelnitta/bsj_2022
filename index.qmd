@@ -232,7 +232,7 @@ Manual
 
 # Results
 
-## {background-image="images/cov_tree_2.png" background-size="contain"}
+## {background-image="images/cov_tree.png" background-size="contain"}
 
 ```{r}
 #| label: make-bs-plot
@@ -313,15 +313,7 @@ ggsave(
   plot = bs_histogram, file = "working/bs_histogram.png")
 ```
 
-::: aside
-FTOL v1.1.0
-:::
-
 ## {background-image="images/bs_tree.png" background-size="contain"}
-
-::: aside
-FTOL v1.1.0
-:::
 
 ## Revisiting the timeline of fern diversification
 
@@ -380,7 +372,7 @@ Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) betwee
 
 - Completion of FTOL
    
-   - "Unlocking the vault" of **herbarium specimens** via plastome skimming
+   - "Unlock the vault" of **herbarium specimens** via plastome skimming
 
 - Integration with **Pteridophyte Phylogeny Group II**
     
