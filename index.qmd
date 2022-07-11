@@ -59,10 +59,20 @@ Botany 2022
 > **Only with a phylogeny** can we begin to understand diversification, regularities in patterns of evolution, or simply suggest individual evolutionary changes within a clade
 
 \- APG
+
+::: {.small}
+[http://www.mobot.org/MOBOT/research/APweb/](http://www.mobot.org/MOBOT/research/APweb/)
+:::
+
 :::
 
 ::: {.column width="50%"}
-![](images/apg.png){height="600"}
+![](images/apg.png){height="620"}
+
+::: {.tiny}
+https://www.digitalatlasofancientlife.org/learn/embryophytes/angiosperms/angiosperm-phylogeny/
+:::
+
 :::
 
 ::::
@@ -366,5 +376,9 @@ Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) betwee
 - S. Fawcett
 
 - M. Hassler
+
+## hidden refs {visibility="hidden"}
+
+[@Testo2016a]
 
 ## References {.scrollable}
