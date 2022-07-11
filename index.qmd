@@ -14,7 +14,6 @@ format:
 #| label: setup
 #| include: false
 knitr::opts_chunk$set(echo = TRUE, cache = TRUE)
-library(xaringanthemer)
 library(ftolr)
 library(ggtree)
 library(ggtext)
@@ -41,8 +40,8 @@ Wataru Iwasaki<sup>1</sup>
 
 :::: {.small}
 1: The University of Tokyo, 2: Smithsonian Institution, 3: Universidad Nacional Autónoma de México  
-ISMB EvolCompGen COSI 2022-07-13  
-[https://joelnitta.github.io/ismb_2022](https://joelnitta.github.io/ismb_2022)
+Botany 2022  
+[https://joelnitta.github.io/botany_2022_ftol](https://joelnitta.github.io/botany_2022_ftol)
 ::::
 
 :::
@@ -52,37 +51,23 @@ ISMB EvolCompGen COSI 2022-07-13
 
 ::::
 
-## Building the Tree of Life (TOL): <br>a major goal of biology since Darwin
+## Phylogenies are essential to biology
 
 :::: {.columns}
 
-::: {.column width="50%" .medium}
-![](images/darwin_tree.png){height="400"}  
-@Darwin1859
+::: {.column width="50%"}
+> **Only with a phylogeny** can we begin to understand diversification, regularities in patterns of evolution, or simply suggest individual evolutionary changes within a clade
+
+\- APG
 :::
 
-
-::: {.column width="50%" .medium}
-![](images/big_tree.png){height="400"}  
-@Hinchliff2015
+::: {.column width="50%"}
+![](images/apg.png){height="600"}
 :::
 
 ::::
 
-## Growth of data on GenBank means TOL may be possible... 
-
-<br>
-
-::: {.r-stack}
-![](images/genbank_growth.png){height="400"}
-:::
-
-
-::: {.medium}
-@Gauthier2019
-:::
-
-## ...using automated pipelines
+## Automated pipelines enable building large trees
 
 ::::: {.columns}
 
@@ -154,81 +139,71 @@ Much more tractable than seed plants (angiosperms):
 
 ---
 
+## GenBank mining
+
+### Sanger: 7 commonly used loci
+  - Genes: *atpA*, *atpB*, *matK*, *rbcL*, *rps4*
+  - Spacers: *trnL*--*trnF*, *rps4*--*trnS*
+  - ca. 5,100 species
+
+### Plastomes
+  - 77 single-copy genes + 2 spacers
+  - ca. 500 species 
+
+## GenBank mining
+
+- Download data to local database using [restez](https://github.com/ropensci/restez)\* R package
+
+- Use superCRUNCH [@Portik2020] to extract sequences without relying on annotations
+
+::: aside
+\*I am current maintainer; if you have questions, please ask!
+:::
+
+## Taxonomic name resolution
+
+- Use [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) as basis for new, fern-specific taxonomic database, [pteridocat](https://github.com/fernphy/pteridocat)
+
+- Resolve GenBank species names to pteridocat using [taxastand](https://github.com/joelnitta/taxastand)\* R package
+
+::: aside
+\*I am developer; if you have questions, please ask!
+:::
+
+## Automated cleaning
+
+- Run all-by-all BLAST [@Camacho2009]
+
+- Any query matching the wrong family is excluded as mis-ID
+
+## Phylogenetic analysis: backbone
+
+- Align plastome sequences with MAFFT [@Katoh2002] (544 species x 74,883 bp, 12.1% missing)
+
+- Infer tree using ML in IQ-TREE [@Nguyen2015] (concatenated matrix, no paritioning)
+
+## Phylogenetic analysis: full tree
+
+- Align Sanger sequences with MAFFT (5,582 species x 12,716 bp, 77% missing)
+
+- Infer tree in IQ-TREE (concatenated matrix, no paritioning) **with plastome tree as constraint**
+
+::: {.fragment}
+- Before final analysis, run IQ-TREE in "fast" mode and manually inspect for rogues
+:::
+
+::: {.fragment}
+- Date tree with treePL [@Smith2012]
+:::
+
+---
+
 ![](images/workflow.png){.r-stretch}
 
 ::: aside
   - Control workflow with **targets** R package [@Landau2021]
   - Runtime ca. 10--14 days
 :::
-
-## Workflow highlights
-
-`r fa("database")` Increase efficiency and reproducibility of working with GenBank data by using a **local DB**
-
-`r fa("edit")` Extract sequences **without relying on GenBank annotations**
-
-`r fa("pagelines")` Implement a **custom fern taxonomy**
-
-`r fa("check-double")` Use **two-step phylogenetic analysis** to maximize accuracy and sampling
-
-`r fa("times-circle")` Incorporate **automated** and **manual** checks for rogues
-
-## `r fa("database")` Increase efficiency and reproducibility of working with GenBank data by using a local DB
-
-[restez](https://github.com/ropensci/restez)* R package
-
-- Download portion ("plants" division) of GenBank from FTP site (v249, cutoff date 2022-04-15, ca. 170 gb)
-
-- Put only fern and outgroup sequences into local DB (mariaDB, ca. 400 mb)
-
-- Post DB in [figshare](https://figshare.com/articles/dataset/Fern_Tree_of_Life_FTOL_input_data/19474316) so others can use
-
-::: aside
-*I am current maintainer; if you have questions, please ask!
-:::
-
-## `r fa("edit")` Extract sequences without relying on GenBank annotations
-
-There is **no standard** for how to annotate GenBank accessions
-
-- Curate set of reference sequences (one sequence per genus) based on well-annotated accessions
-
-- Use these as a BLAST DB to extract matching regions from each fern accession with superCRUNCH [@Portik2020]
-
-## `r fa("pagelines")` Implement a custom fern taxonomy {.smaller}
-
-NCBI species names include many **synonyms**
-
-- Used [Catalog of Life](https://www.catalogueoflife.org/) as basis for new, fern-specific taxonomic database, [pteridocat](https://github.com/fernphy/pteridocat)
-  - Built database with [dwctaxon](https://github.com/joelnitta/dwctaxon)\* R package (handles taxonomic data in compliance with [Darwin Core](https://dwc.tdwg.org/terms/#taxon) standard)
-
-- Resolved GenBank species names to pteridocat using [taxastand](https://github.com/joelnitta/taxastand)\* R package
-  - Matches taxonomic names to a custom database, while accounting for spelling differences and taxonomic idiosyncrasies
-
-::: aside
-I am the developer; if you have questions, please ask!
-:::
-
-## `r fa("check-double")` Use two-step phylogenetic analysis to maximize accuracy and sampling
-
-1. Plastome backbone (423 species x 79 loci)
-
-2. Use plastome backbone as constraint tree for analysis of Sanger dataset (5,582 species x 7 loci)
-
-(also tried supermatrix, but this was much slower: ca. 1 month vs. 10 days)
-
-## `r fa("times-circle")` Incorporate automated and manual checks for rogues {.smaller}
-
-Automated
-
-- All-by-all BLAST
-- Exclude any sequences that matched the wrong family
-
-Manual
-
-- Construct initial tree in "fast" mode with IQ-TREE [@Nguyen2015]
-- Analyze monophyly (genus level and higher) with MonoPhy R package [@Schwery2016]
-- Curate exclusion list in consultation with taxonomic experts
 
 # Results
 
@@ -317,8 +292,10 @@ ggsave(
 
 ## Revisiting the timeline of fern diversification
 
-- Dated with treePL [@Smith2012] using 51 fossils (**2x more than previous**)
+- 51 fossils (**2x more than previous**)
+
 - Pushes back stem ages for most families ca. 10-30 my
+
 - Suggests ferns **did not diversify "in the shadow" of angiosperms**
 
 ---
@@ -352,8 +329,6 @@ ft_tree(drop_og = TRUE)
 
 Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) between v1.0.0 and v1.1.0
 
-- Implemented "inclusion list" (preferred accessions for some species) based on recent phylogeny [@Patel2019]
-
 - Number of non-monophyletic genera **dropped from 16 to 7**
 
 # Summary
@@ -376,11 +351,7 @@ Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) betwee
 
 - Integration with **Pteridophyte Phylogeny Group II**
     
-    - Species-level, community-driven, living taxonomy
-
 - Transition to **phylogenomics** for all species
-
-- Continue to provide tools (R packages) towards building **TOL**
 
 ## Acknowledgements
 

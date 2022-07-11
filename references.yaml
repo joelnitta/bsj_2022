@@ -47,108 +47,55 @@ references:
     ages, and relationships of taxa
   type: article-journal
   volume: '66'
-- id: Darwin1859
+- id: Camacho2009
   author:
-  - family: Darwin
-    given: Charles
-  citation-key: Darwin1859
-  event-place: London
+  - family: Camacho
+    given: C
+  - family: Coulouris
+    given: G
+  - family: Avagyan
+    given: V
+  - family: Ma
+    given: 'N'
+  - family: Papadopoulos
+    given: J
+  - family: Bealer
+    given: K
+  - family: Madden
+    given: T
+  citation-key: Camacho2009
+  container-title: BMC Bioinformatics
+  issue: '1'
   issued:
-  - year: 1859
-  publisher: J Murray
-  publisher-place: London
-  title: On the origin of species by means of natural selection, or the preservation
-    of favoured races in the struggle for life
-  type: book
-- id: Gauthier2019
-  accessed:
-  - year: 2022
-    month: 7
-    day: 1
-  author:
-  - family: Gauthier
-    given: Jeff
-  - family: Vincent
-    given: Antony T
-  - family: Charette
-    given: Steve J
-  - family: Derome
-    given: Nicolas
-  citation-key: Gauthier2019
-  container-title: Briefings in Bioinformatics
-  DOI: 10.1093/bib/bby063
-  ISSN: 1467-5463, 1477-4054
-  issue: '6'
-  issued:
-  - year: 2019
-    month: 11
-    day: 27
-  language: en
-  page: 1981-1996
-  source: DOI.org (Crossref)
-  title: A brief history of bioinformatics
+  - year: 2009
+  page: '421'
+  title: 'BLAST+: architecture and applications'
   type: article-journal
-  URL: https://academic.oup.com/bib/article/20/6/1981/5066445
-  volume: '20'
-- id: Hinchliff2015
+  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1417
+  volume: '10'
+- id: Katoh2002
   author:
-  - family: Hinchliff
-    given: Cody E.
-  - family: Smith
-    given: Stephen A
-  - family: Allman
-    given: James F.
-  - family: Burleigh
-    given: J. Gordon
-  - family: Chaudhary
-    given: Ruchi
-  - family: Coghill
-    given: Lyndon M.
-  - family: Crandall
-    given: Keith
-    dropping-particle: a.
-  - family: Deng
-    given: Jiabin
-  - family: Drew
-    given: Bryan T.
-  - family: Gazis
-    given: Romina
-  - family: Gude
-    given: Karl
-  - family: Hibbett
-    given: David S.
-  - family: Katz
-    given: Laura
-    dropping-particle: a.
-  - family: Laughinghouse
-    given: H. Dail
-  - family: McTavish
-    given: Emily Jane
-  - family: Midford
-    given: Peter E.
-  - family: Owen
-    given: Christopher L.
-  - family: Ree
-    given: Richard H.
-  - family: Rees
-    given: Jonathan
-    dropping-particle: a.
-  - family: Soltis
-    given: Douglas E.
-  - family: Williams
-    given: Tiffani
-  - family: Cranston
-    given: Karen
-    dropping-particle: a.
-  citation-key: Hinchliff2015
-  container-title: Proceedings of the National Academy of Sciences
-  DOI: 10.1073/pnas.1423041112
-  ISSN: 0027-8424
+  - family: Katoh
+    given: Kazutaka
+  - family: Misawa
+    given: Kazuharu
+  - family: Kuma
+    given: Keiichi
+  - family: Miyata
+    given: Takashi
+  citation-key: Katoh2002
+  container-title: Nucleic Acids Research
+  DOI: 10.1093/nar/gkf436
+  ISSN: 1362-4962
+  issue: '14'
   issued:
-  - year: 2015
-  page: '201423041'
-  title: Synthesis of phylogeny and taxonomy into a comprehensive tree of life
+  - year: 2002
+  page: 3059-3066
+  PMID: '12136088'
+  title: 'MAFFT: A novel method for rapid multiple sequence alignment based on fast
+    Fourier transform'
   type: article-journal
+  volume: '30'
 - id: Landau2021
   accessed:
   - year: 2021
@@ -197,36 +144,6 @@ references:
     phylogenies'
   type: article-journal
   volume: '32'
-- id: Patel2019
-  accessed:
-  - year: 2022
-    month: 5
-    day: 2
-  author:
-  - family: Patel
-    given: Nikisha
-  - family: Fawcett
-    given: Susan
-  - family: Sundue
-    given: Michael
-  - family: Budke
-    given: Jessica M.
-  citation-key: Patel2019
-  container-title: International Journal of Plant Sciences
-  container-title-short: International Journal of Plant Sciences
-  DOI: 10.1086/705588
-  ISSN: 1058-5893, 1537-5315
-  issue: '9'
-  issued:
-  - year: 2019
-    month: 11
-  language: en
-  page: 1016-1035
-  source: DOI.org (Crossref)
-  title: Evolution of perine morphology in the Thelypteridaceae
-  type: article-journal
-  URL: https://www.journals.uchicago.edu/doi/10.1086/705588
-  volume: '180'
 - id: Portik2020
   accessed:
   - year: 2021
@@ -256,31 +173,6 @@ references:
   title-short: SuperCRUNCH
   type: article-journal
   volume: '11'
-- id: Schwery2016
-  accessed:
-  - year: 2022
-    month: 2
-    day: 4
-  author:
-  - family: Schwery
-    given: Orlando
-  - family: O’Meara
-    given: Brian C.
-  citation-key: Schwery2016
-  container-title: PeerJ Computer Science
-  DOI: 10.7717/peerj-cs.56
-  ISSN: 2376-5992
-  issued:
-  - year: 2016
-    month: 3
-    day: 30
-  language: en
-  page: e56
-  source: DOI.org (Crossref)
-  title: 'MonoPhy: a simple R package to find and visualize monophyly issues'
-  title-short: '*MonoPhy*'
-  type: article-journal
-  volume: '2'
 - id: Smith2012
   author:
   - family: Smith
