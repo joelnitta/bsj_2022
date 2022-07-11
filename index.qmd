@@ -2,7 +2,9 @@
 format:
   revealjs:
     slide-level: 2
-    bibliography: references.yaml
+    bibliography:
+      - references.yaml
+      - references_other.yaml
     csl: ecology.csl
     reference-location: document
     css: styles.css
@@ -64,15 +66,14 @@ Botany 2022
 [http://www.mobot.org/MOBOT/research/APweb/](http://www.mobot.org/MOBOT/research/APweb/)
 :::
 
-:::
-
-::: {.column width="50%"}
-![](images/apg.png){height="620"}
-
 ::: {.tiny}
 https://www.digitalatlasofancientlife.org/learn/embryophytes/angiosperms/angiosperm-phylogeny/
 :::
 
+:::
+
+::: {.column width="50%"}
+![](images/apg.png){height="600"}
 :::
 
 ::::
@@ -172,7 +173,7 @@ Much more tractable than seed plants (angiosperms):
 
 ## Taxonomic name resolution
 
-- Use [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) as basis for new, fern-specific taxonomic database, [pteridocat](https://github.com/fernphy/pteridocat)
+- Use [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) [@Hassler2022] as basis for new, fern-specific taxonomic database, [pteridocat](https://github.com/fernphy/pteridocat)
 
 - Resolve GenBank species names to pteridocat using [taxastand](https://github.com/joelnitta/taxastand)\* R package
 

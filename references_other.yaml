@@ -1,0 +1,28 @@
+---
+references:
+
+- id: Hassler2022
+  type: webpage
+  accessed:
+  - year: 2022
+    month: 1
+    day: 1
+  author:
+  - family: Hassler
+    given: Michael
+  issued:
+  - year: 2022
+  title: 'World Ferns. Synonymic Checklist and Distribution of Ferns and Lycophytes of the World'
+  URL: www.worldplants.de/ferns/
+  
+- id: DarwinCore2009
+  type: webpage
+  accessed:
+  - year: 2022
+    month: 1
+    day: 1
+  author: 'Darwin Core Task Group'
+  issued:
+  - year: 2009
+  title: 'Darwin Core. Biodiversity Information Standards (TDWG)'
+  URL: http://www.tdwg.org/standards/450
