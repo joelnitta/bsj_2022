@@ -167,6 +167,8 @@ Much more tractable than seed plants (angiosperms):
 
 - Use superCRUNCH [@Portik2020] to extract sequences without relying on annotations
 
+![](images/supercrunch.png){height="250"}
+
 ::: aside
 \*I am current maintainer; if you have questions, please ask!
 :::
@@ -177,6 +179,43 @@ Much more tractable than seed plants (angiosperms):
 
 - Resolve GenBank species names to pteridocat using [taxastand](https://github.com/joelnitta/taxastand)\* R package
 
+::: {.medium}
+```{r}
+#| label: name-res-ex
+#| echo: false
+
+# Read in name resolution results
+name_res <- readRDS("data/match_results_resolved_all.RDS")
+
+# Get number of rows
+nrow_res <-
+name_res %>% 
+  nrow() %>%
+  scales::number(big.mark = ",")
+
+# Isolate some example rows
+name_res %>%
+  filter(matched_status == "synonym") %>%
+  select(query, matched_name, resolved_name) %>%
+  mutate(
+    across(everything(), ~nchar(.), .names = "{.col}_nchar"),
+    total_nchar = rowSums(across(contains("_nchar"))),
+    q_genus = str_split(query, " ") %>% map_chr(1)
+    ) %>%
+  filter(total_nchar < 70) %>%
+  group_by(q_genus) %>%
+  slice_min(order_by = total_nchar) %>%
+  ungroup() %>%
+  arrange(total_nchar) %>%
+  slice(1:2) %>%
+  arrange(query) %>%
+  select(query, matched_name, resolved_name) %>%
+  knitr::kable()
+```
+
+... (`r nrow_res` total)
+:::
+
 ::: aside
 \*I am developer; if you have questions, please ask!
 :::
@@ -186,6 +225,15 @@ Much more tractable than seed plants (angiosperms):
 - Run all-by-all BLAST [@Camacho2009]
 
 - Any query matching the wrong family is excluded as mis-ID
+
+::: {.small}
+|species|accession|locus|query family| match family |
+| ----- | ------- | --- | ------- | ----- |
+Abacopteris_gymnopteridifrons | JF303974 | rbcL | Thelypteridaceae | Athyriaceae
+Angiopteris_evecta | AY344778 | trnL-trnF | Marattiaceae | Ophioglossaceae
+...
+(70 total)
+:::
 
 ## Phylogenetic analysis: backbone
 
@@ -310,7 +358,9 @@ ggsave(
 - Suggests ferns **did not diversify "in the shadow" of angiosperms**
 
 ---
-## {background-image="images/stem_ages.png" background-size="contain"}
+## Older stem<br>ages for most<br>families
+
+![](images/stem_ages.png){.absolute top=0 left=400 height="700"}
 
 ## Web portal
 
@@ -350,9 +400,9 @@ Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) betwee
 
 - Custom taxonomy tailored for ferns
 
-- Open data, methods, and results
-
 - Input from taxonomic experts and broader community
+
+- **Model for other plant groups at similar scale?**
 
 ## Future directions
 
