@@ -36,12 +36,12 @@ library(fontawesome)
 ::: {.column width="50%"}
 
 :::: {.medium}
-**Joel Nitta<sup>1</sup>**, Eric Schuettpelz<sup>2</sup>, Santiago Ramírez-Barahona<sup>3</sup>,  
+**Joel Nitta<sup>1</sup>**, Eric Schuettpelz<sup>2</sup>, Santiago Ram&iacute;rez-Barahona<sup>3</sup>,  
 Wataru Iwasaki<sup>1</sup>
 ::::
 
 :::: {.small}
-1: The University of Tokyo, 2: Smithsonian Institution, 3: Universidad Nacional Autónoma de México  
+1: The University of Tokyo, 2: Smithsonian Institution, 3: Universidad Nacional Aut&oacute;noma de M&eacute;xico  
 Botany 2022  
 [https://joelnitta.github.io/botany_2022_ftol](https://joelnitta.github.io/botany_2022_ftol)
 ::::
