@@ -217,7 +217,7 @@ name_res %>%
 :::
 
 ::: aside
-\*I am developer; if you have questions, please ask!
+\*Check out talk in Biodiversity Informatics & Herbarium Digitization
 :::
 
 ## Automated cleaning
