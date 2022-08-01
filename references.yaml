@@ -1,4 +1,93 @@
 references:
+- id: Gauthier2019
+  accessed:
+  - year: 2022
+    month: 7
+    day: 1
+  author:
+  - family: Gauthier
+    given: Jeff
+  - family: Vincent
+    given: Antony T
+  - family: Charette
+    given: Steve J
+  - family: Derome
+    given: Nicolas
+  citation-key: Gauthier2019
+  container-title: Briefings in Bioinformatics
+  DOI: 10.1093/bib/bby063
+  ISSN: 1467-5463, 1477-4054
+  issue: '6'
+  issued:
+  - year: 2019
+    month: 11
+    day: 27
+  language: en
+  page: 1981-1996
+  source: DOI.org (Crossref)
+  title: A brief history of bioinformatics
+  type: article-journal
+  URL: https://academic.oup.com/bib/article/20/6/1981/5066445
+  volume: '20'
+- id: Hinchliff2015
+  author:
+  - family: Hinchliff
+    given: Cody E.
+  - family: Smith
+    given: Stephen A
+  - family: Allman
+    given: James F.
+  - family: Burleigh
+    given: J. Gordon
+  - family: Chaudhary
+    given: Ruchi
+  - family: Coghill
+    given: Lyndon M.
+  - family: Crandall
+    given: Keith
+    dropping-particle: a.
+  - family: Deng
+    given: Jiabin
+  - family: Drew
+    given: Bryan T.
+  - family: Gazis
+    given: Romina
+  - family: Gude
+    given: Karl
+  - family: Hibbett
+    given: David S.
+  - family: Katz
+    given: Laura
+    dropping-particle: a.
+  - family: Laughinghouse
+    given: H. Dail
+  - family: McTavish
+    given: Emily Jane
+  - family: Midford
+    given: Peter E.
+  - family: Owen
+    given: Christopher L.
+  - family: Ree
+    given: Richard H.
+  - family: Rees
+    given: Jonathan
+    dropping-particle: a.
+  - family: Soltis
+    given: Douglas E.
+  - family: Williams
+    given: Tiffani
+  - family: Cranston
+    given: Karen
+    dropping-particle: a.
+  citation-key: Hinchliff2015
+  container-title: Proceedings of the National Academy of Sciences
+  DOI: 10.1073/pnas.1423041112
+  ISSN: 0027-8424
+  issued:
+  - year: 2015
+  page: '201423041'
+  title: Synthesis of phylogeny and taxonomy into a comprehensive tree of life
+  type: article-journal
 - id: Antonelli2016
   accessed:
   - year: 2020

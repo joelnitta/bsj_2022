@@ -29,56 +29,64 @@ library(fontawesome)
 
 # Introduction {visibility="hidden"}
 
-## An Open and Continuously <br>Updated Fern Tree of Life<br>(FTOL) {background-image="images/background.png" background-size="contain" background-color="#191919"}
+## The Open Fern Tree of Life:<br>常に最新の状態を保つ<br>全シダ植物系統樹に<br>向けて {background-image="images/background.png" background-size="contain" background-color="#191919"}
 
 :::: {.columns}
 
-::: {.column width="50%"}
+::: {.column width="60%"}
 
 :::: {.medium}
-**Joel Nitta<sup>1</sup>**, Eric Schuettpelz<sup>2</sup>, Santiago Ram&iacute;rez-Barahona<sup>3</sup>,  
-Wataru Iwasaki<sup>1</sup>
+**Joel Nitta<sup>1</sup>**, Eric Schuettpelz<sup>2</sup>, Santiago Ram&iacute;rez-Barahona<sup>3</sup>, Wataru Iwasaki<sup>1</sup>
 ::::
 
 :::: {.small}
-1: The University of Tokyo, 2: Smithsonian Institution, 3: Universidad Nacional Aut&oacute;noma de M&eacute;xico  
-Botany 2022  
-[https://joelnitta.github.io/botany_2022_ftol](https://joelnitta.github.io/botany_2022_ftol)
+1: 東大・大学院・新領域, 2: Smithsonian Institution, 3: Universidad Nacional Aut&oacute;noma de M&eacute;xico [https://joelnitta.github.io/shinka_2022](https://joelnitta.github.io/shinka_2022)
 ::::
 
 :::
 
-::: {.column width="50%"}
+::: {.column width="40%"}
 :::
 
 ::::
 
-## Phylogenies are essential to biology
+## 全生物の系統樹の構築：ダーウィン以来の大きな目的
 
 :::: {.columns}
 
-::: {.column width="50%"}
-> **Only with a phylogeny** can we begin to understand diversification, regularities in patterns of evolution, or simply suggest individual evolutionary changes within a clade
-
-\- APG
-
-::: {.small}
-[http://www.mobot.org/MOBOT/research/APweb/](http://www.mobot.org/MOBOT/research/APweb/)
+::: {.column width="50%" .medium}
+![](images/darwin_tree.png){height="400"}  
+Darwin (1837)
 :::
 
-::: {.tiny}
-https://www.digitalatlasofancientlife.org/learn/embryophytes/angiosperms/angiosperm-phylogeny/
-:::
-
-:::
-
-::: {.column width="50%"}
-![](images/apg.png){height="600"}
+::: {.column width="50%" .medium}
+![](images/big_tree.png){height="400"}  
+@Hinchliff2015
 :::
 
 ::::
 
-## Automated pipelines enable building large trees
+::: {.notes}
+全生物の系統樹を構築することは、ダーウィン以来、生物学において大きな目的です。
+:::
+
+## GenBankのデータの増加によって、現実的になりつつある
+
+<br>
+
+::: {.r-stack}
+![](images/genbank_growth.png){height="400"}
+:::
+
+::: {.medium}
+@Gauthier2019
+:::
+
+::: {.notes}
+そして、この大きな目的は近年、GenBankに含まれているシーケンスデータの著しい増加によって、現実的になりつつあります。
+:::
+
+## （自動的なパイプラインを使えば）
 
 ::::: {.columns}
 
@@ -98,86 +106,97 @@ https://www.digitalatlasofancientlife.org/learn/embryophytes/angiosperms/angiosp
 
 :::::
 
-## Problem 1: tradeoff between scalability and accuracy
+::: {.notes}
+しかし、GenBankのデータの量はとても大きいので、うまく扱うのに自動的なパイプラインが必要になります。
+:::
 
-- Any automated pipeline must make **shortcuts** and **assumptions**
+## 問題その１：性能とスケーラビリティのトレードオフ
 
-- **Manual inspection** of all sequences would lead to high-quality results, **but does not scale**
+- どの自動的なパイプラインでも、いくつかの**前提**や**近道**をしないといけない
+
+- 一方で、手動でシーケンスを全部確認したらより正確な系統樹が得られるはずが、**大量のデータには無理**
 
 ::: {.r-stack}
 ![](images/balance.png){height="300"}
 :::
 
-## Problem 2: tree built today will be out-of-date tomorrow
+::: {.notes}
+ここで二つの問題が発生します。一つは、性能とスケーラビリティのトレードオフです。自動的なパイプラインはどうしてもあるデータに対する前提を持って、近道をすることがあるので、呉同定と言ったようなミスが見つかりにくいのです。
 
-- Due to the rapid accumulation of data on GenBank
+一方で、シーケンスを一つ一つマニュアルに確かめることができたら、より正確な系統樹が得られるはずですが、ビッグデータだとそのようなことは無理があります。
+:::
+
+## 問題その２：すぐに古くなってしまう
+
+- GenBankのデータの著しい増加によって系統樹が**すぐに古くなってしまう**
 
 ::: {.r-stack}
 ![](images/time.png){height="300"}
 :::
 
-## Our approach: combine automation with customization
+::: {.notes}
+もう一つの問題は、データが日々GenBankに蓄積して行くので、一度作った系統樹はすぐに古くなってしまいます。
+:::
 
-Goal: construct a pipeline to generate a **maximally sampled**, **high taxonomic quality** phylogeny of **ferns**
+## 本研究の試み：自動化とカスタマイズを両方取り入れる
+
+本研究の目的：**シダ植物**の最も種数の多い、分類学的に高性能な**系統樹を自動的に作るシステムの開発**
 
 ::: {.r-stack}
 ![](images/conveyer.png){height="300"}
 :::
 
-## Why ferns?
+::: {.notes}
+そこで、本研究では、自動化とパイプラインのカスタマイズを両方取り入れることにしてみました。
 
-A large, diverse, ecologically important group of plants
+本研究の目的は**シダ植物**の最も種数の多い、分類学的に高性能な**系統樹を自動的に作るシステムの開発**です。
+:::
 
-Much more tractable than seed plants (angiosperms):
+## なぜシダ？
 
-- Ferns: ca. 12,000 species, 40-50% sequenced
+多様で、生態学的に重要な役割を果たしている植物
 
-- Seed plants: ca. 350,000 species, 20% sequenced
+被子植物と比べて、**調べやすい**：
+
+- シダ植物：約12,000種、そのうち４−５割シーケンスあり
+- 被子植物：約350,000種、２割シーケンスあり
 
 ::: {.r-stack}
 ![](images/ferns.png){height="300"}
 :::
 
----
-
-### Sanger-sequenced plastid genes = workhorse of fern molecular systematics
-
-::: {.r-stack}
-![](images/genbank_ferns.png){height="550"}
+::: {.notes}
+なぜシダ植物を選んだかと言いますと、シダ植物は陸上植物の中で被子植物に次いで２番目に大きな系統群で、様々な環境に生育し、生物多様性的な面から見ると非常に重要なグループです。
+また、シダ植物は被子植物と比べて全体の種数が少ないため、比較的に調べやすい研究対象です。被子植物の約35万種に対して、約1万２千種しかいなくて、そのうちやく40から50パーセントはシーケンスデータが公開されているので、全体の系統樹を作るのに適した材料です。
 :::
 
-# Methods
+# 方法 
 
 ---
 
-## GenBank mining
+## GenBankのデータマイニング
 
-### Sanger: 7 commonly used loci
-  - Genes: *atpA*, *atpB*, *matK*, *rbcL*, *rps4*
-  - Spacers: *trnL*--*trnF*, *rps4*--*trnS*
-  - ca. 5,100 species
+### サンガー法データ
+  - ７つの遺伝子
+  - 約5,100種
 
-### Plastomes
-  - 77 single-copy genes + 2 spacers
-  - ca. 500 species 
+### 次世代シーケンサーデータ
+  - 79遺伝子
+  - 約400種 
 
-## GenBank mining
+::: {.notes}	
+入力データは２種類あります。一つはサンガー法遺伝子です。本研究にはシダ植物で最もよく使われてきた７つの遺伝子を使っています。これは現在全部でやく５０００種が含まれています。
 
-- Download data to local database using [restez](https://github.com/ropensci/restez)\* R package
+もう一つのデータは全葉緑体ゲノム由来の遺伝子です。これはサンガー法のデータよりも遺伝子の数がずっと多いのですが、種の数は少ないです：７９遺伝子と約４００種です。
 
-- Use superCRUNCH [@Portik2020] to extract sequences without relying on annotations
-
-![](images/supercrunch.png){height="250"}
-
-::: aside
-\*I am current maintainer; if you have questions, please ask!
+データは全部GenBankからダウンロードしました。
 :::
 
-## Taxonomic name resolution
+## 種名の統一
 
-- Use [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) [@Hassler2022] as basis for new, fern-specific taxonomic database, [pteridocat](https://github.com/fernphy/pteridocat)
+- [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) [@Hassler2022]をもとに新しい分類データベース「[pteridocat](https://github.com/fernphy/pteridocat)」を構築
 
-- Resolve GenBank species names to pteridocat using [taxastand](https://github.com/joelnitta/taxastand)\* R package
+- GenBankの種名を[taxastand](https://github.com/joelnitta/taxastand)\* Rパッケージによってpteridocatに統一する
 
 ::: {.medium}
 ```{r}
@@ -213,18 +232,25 @@ name_res %>%
   knitr::kable()
 ```
 
-... (`r nrow_res` total)
+... (合計：`r nrow_res`列)
 :::
 
 ::: aside
-\*Check out talk in Biodiversity Informatics & Herbarium Digitization
+\*私が開発者。もし使い方についてご質問があれば、ご連絡お願いします。
 :::
 
-## Automated cleaning
+::: {.notes}	
+GenBankに含まれているシダ植物の種名はもちろん、シダ植物の研究者が決めたわけではなく、古い名前やシノニムがたくさん含まれています。
+この名前を治すために、標準の分類学的なデータベースに一致しました。
+標準データベースは元々World Fernsというデータベースを元に、今回の研究に使えるように改造し、pteridocatと名付けました。
+GenBankの種名をtaxastandという、私がこの作業を行うために開発したRパッケージによってpteridocatに統一して、シノニムを排除しました。
+:::
 
-- Run all-by-all BLAST [@Camacho2009]
+## 自動的な種の呉同定の排除
 
-- Any query matching the wrong family is excluded as mis-ID
+- all-by-all BLAST [@Camacho2009]　をかける
+
+- クエリー（種）が異なる科と一致した場合、呉同定の排除として排除する
 
 ::: {.small}
 |species|accession|locus|query family| match family |
@@ -232,41 +258,71 @@ name_res %>%
 Abacopteris_gymnopteridifrons | JF303974 | rbcL | Thelypteridaceae | Athyriaceae
 Angiopteris_evecta | AY344778 | trnL-trnF | Marattiaceae | Ophioglossaceae
 ...
-(70 total)
+(合計：７０)
 :::
 
-## Phylogenetic analysis: backbone
-
-- Align plastome sequences with MAFFT [@Katoh2002] (544 species x 74,883 bp, 12.1% missing)
-
-- Infer tree using ML in IQ-TREE [@Nguyen2015] (concatenated matrix, no paritioning)
-
-## Phylogenetic analysis: full tree
-
-- Align Sanger sequences with MAFFT (5,582 species x 12,716 bp, 77% missing)
-
-- Infer tree in IQ-TREE (concatenated matrix, no paritioning) **with plastome tree as constraint**
-
-::: {.fragment}
-- Before final analysis, run IQ-TREE in "fast" mode and manually inspect for rogues
+::: {.notes}	
+もう一つ、GenBankのデータを扱う上で気をかけなければないのは、種の呉同定です。  
 :::
 
-::: {.fragment}
-- Date tree with treePL [@Smith2012]
+## 系統解析：バックボーン
+
+- MAFFTによってシーケンスをアライン [@Katoh2002]
+
+- IQ-TREE [@Nguyen2015]において最尤法によって系統樹を推定する
+
+::: {.notes}	
+系統解析は二段階で行いました。まずは、全葉緑体遺伝子をMAFFTによってアラインして、IQ-TREEで最尤法によって系統樹を推測しました。この系統樹は深い分岐点を含むので、バックボーンツリーと呼びます。
 :::
 
----
+## 系統解析：全体のツリー
 
-![](images/workflow.png){.r-stretch}
+- MAFFTによってシーケンスをアライン
 
-::: aside
-  - Control workflow with **targets** R package [@Landau2021]
-  - Runtime ca. 10--14 days
+- IQ-TREE [@Nguyen2015]において**葉緑体の系統樹を制約にして**最尤法によって系統樹を推定する
+
+- treePL [@Smith2012]によって分岐年代推定を行う
+
+::: {.notes}	
+次には、サンガー法遺伝子を同じようにアラインメントを作って、系統解析を行いますが、一つだけ違うところは、IQ-TREEでは葉緑体の系統樹を制約として使います。こうすることによって、深い分岐点をはっきりと決めることができると同時に、種のサンプリングも最大にすることができます。
+この全体の系統樹が得られたら、treePLによって分岐年代推定を行いました。
 :::
 
-# Results
+# 結果
+
+## バックボーンが綺麗に<br>決まる
+
+:::: {.columns}
+
+::: {.column width="50%"}
+- 分岐点の93%が100%支持
+
+- 議論のあった分岐点も綺麗に決まる
+:::
+
+::: {.column width="50%"}
+![](images/backbone_tree_trans.png){.absolute top=0 right=0 height="700"}
+:::
+
+::::
+
+::: {.notes}
+まずは、f全葉緑体によるバックボーンツリーです。ここでは、チップを科で表しています。
+
+予想していたように、バックボーンの支持根はとても高いです。番号が振っていない分岐点は全部１００パーセントです。
+
+トポロジーは今までの葉緑体マーカーを使った系統樹とおおまかに一致しました。そして、いくつかその関係について議論があった深い分岐点は綺麗に決まりました（例えば、Aspleniineae）。
+:::
 
 ## {background-image="images/cov_tree.png" background-size="contain"}
+
+::: {.notes}
+次は現在のFern Tree of Life、略してFTOLです。
+
+現存していると思われる12万シダ植物のうち、半分近くの５千５百種が入っています。
+
+これは今までの一番大きな系統樹と比べて約４０パーセントの増加になります。
+:::
 
 ```{r}
 #| label: make-bs-plot
@@ -347,36 +403,57 @@ ggsave(
   plot = bs_histogram, file = "working/bs_histogram.png")
 ```
 
-## {background-image="images/bs_tree.png" background-size="contain"}
+## 分岐年代の<br>再評価
 
-## Revisiting the timeline of fern diversification
+:::: {.columns}
 
-- 51 fossils (**2x more than previous**)
+::: {.column width="40%"}
+- 化石の校正点51点（今までの**倍近く**）
 
-- Pushes back stem ages for most families ca. 10-30 my
+- 多くの科の分岐年代を約１〜３千万年より古いと推定
 
-- Suggests ferns **did not diversify "in the shadow" of angiosperms**
+- シダ植物は被子植物の「影」で進化したわけではない？
+:::
 
----
-## Older stem<br>ages for most<br>families
-
+::: {.column width="60%"}
 ![](images/stem_ages.png){.absolute top=0 left=400 height="700"}
+:::
 
-## Web portal
+::::
 
-[https://fernphy.github.io/](https://fernphy.github.io/){preview-link="true"}
+::: {.notes}	
+また、本研究の大きな発見は、シダ植物の種文化のタイミングです。今までの研究は分岐年代推定に２０個程度の化石を使ってきましたが、今回の研究では、化石の文献を再評価した結果、今までの倍の５０個の化石を使うことができました。
 
-- Data downloads
+その結果、多くのシダ植物の科の分岐年代は今までの研究よりも約１千万から３千万くらい古いことが示唆されました。
 
-- Shiny app for exploring data
+２０００年代初期に最初の植物の分子年代推定の論文が出た時以来、現在のシダ植物が被子植物の後に多様化した、いわゆる「ferns diversified in the shadow of angiosperms」仮説がずっと主流になっていましたが、今回の大きな系統樹を含めて、化石とサンプルを増やすことによってシダ植物の多様化が被子植物と同じくらい、あるいはもっと古かったかもしれないという可能性が高くなってきています。
 
-## R package **ftolr**
+なお、この結果はtreePLという、割とシンプルな解析に基づいているので、今後はより高精度なツールでも調べる予定です。
+:::
+
+## [https://fernphy.github.io/](https://fernphy.github.io/)
+
+- データのダウンロード
+
+- 系統樹、データの探索
+
+::: {.center}
+![](images/website.png){height="400"}
+:::
+
+::: {.notes}
+本研究において特に大事な点は、今回の結果を論文として発表するだけで終わりにするのではなく、どの研究者でも簡単に手に入れて、様々な研究に使えるようにしたいと思いました。
+
+そのために、https://fernphy.github.io/でウエブサイトを用意して、ここからデータのダウンロード、系統樹の可視化、サンプルのデータの詳細を見ることなどができます。
+:::
+
+## R パッケージ **ftolr**
 
 [https://github.com/fernphy/ftolr](https://github.com/fernphy/ftolr){preview-link="true"}
 
-- Read tree and data (alignments) directly into R
+- 直接Rに系統樹やアラインメントを読み込む
 
-- Options for outgroups, rooting, locus selection, etc.
+- 外郡の有無などのオプション
 
 ```{r}
 #| label: ftolr-demo
@@ -386,41 +463,37 @@ library(ftolr)
 ft_tree(drop_og = TRUE)
 ```
 
-## Community involvement
+::: {.notes}
+また、Rで簡単に使えるように、ftolrというRパッケージも用意しました。ftolrによってRに直接系統樹やアラインメントなどを読み込むことができます。また、外郡の有無など、様々なカスタマイズもできます。
+:::
 
-Consulted with a taxonomic expert on family Thelypteridaceae (S. Fawcett) between v1.0.0 and v1.1.0
+# まとめ
 
-- Number of non-monophyletic genera **dropped from 16 to 7**
+## 自動化とカスタマイズのバランスを取れた「ちょうど良い」アプローチ
 
-# Summary
+- GenBankデータを自動的にダウンロードし、系統樹にする
 
-## FTOL hits sweet spot between automation and customization
+- シダ植物専用の分類システムを導入
 
-- Automated, versioned mining of GenBank data
+- 他の研究者が簡単に使える
 
-- Custom taxonomy tailored for ferns
+- **他の生物でも同様にできる？**
 
-- Input from taxonomic experts and broader community
+## 今後の予定・目的
 
-- **Model for other plant groups at similar scale?**
-
-## Future directions
-
-- Completion of FTOL
+- **FTOLを完成させる**
    
-   - "Unlock the vault" of **herbarium specimens** via plastome skimming
-
-- Integration with **Pteridophyte Phylogeny Group II**
+   - 植物標本庫に収まっている標本のゲノムスキミング
     
-- Transition to **phylogenomics** for all species
+- そのうち、**ファイロゲノミクス**に切り替わる
 
-## Acknowledgements
+## 謝辞
 
-- Japan Society for the Promotion of Science
+- 日本学術振興会
 
 - Smithsonian National Museum of Natural History Peter Buck Fellowship
 
-- Members of the Iwasaki lab, The University of Tokyo
+- 東京大学大学院新領域創成科学研究科先端生命科学専攻岩崎研のメンバー
 
 - A.E. White
 
