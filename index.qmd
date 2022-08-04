@@ -45,7 +45,7 @@ library(geiger)
 ::::
 
 :::: {.small}
-1: 東大・大学院・新領域, 2: Smithsonian Institution, 3: Universidad Nacional Aut&oacute;noma de M&eacute;xico [https://joelnitta.github.io/shinka_2022](https://joelnitta.github.io/shinka_2022)
+1: 東大・大学院・新領域, 2: Smithsonian Institution, 3: Universidad Nacional Aut&oacute;noma de M&eacute;xico [https://joelnitta.github.io/shinka_2022](https://joelnitta.github.io/shinka_2022) 日本進化学会第24回大会 E1
 ::::
 
 :::
@@ -151,7 +151,7 @@ Darwin (1837)
 
 ## 本研究の試み：自動化とカスタマイズを両方取り入れる
 
-本研究の目的：**シダ植物**を用いて、**分類学的に高精度**で**種数の多い**系統樹を自動的に作るシステムを開発
+本研究の目的：**シダ植物**を用いて、**分類学的に高精度**で<br>**種数の多い**系統樹を自動的に作るシステムを開発
 
 ::: {.r-stack}
 ![](images/conveyer.png){height="300"}
@@ -186,26 +186,27 @@ Darwin (1837)
 
 ---
 
-## GenBankのデータマイニング：シダ植物の葉緑体遺伝子
+## GenBankのデータマイニング：<br>葉緑体シングルコピー遺伝子
 
-### サンガー法データ
-  - ７つの遺伝子
+<br>
+
+### サンガー法
+  - 7遺伝子
   - 約5,100種
 
-### 次世代シーケンサーデータ
+### 次世代（全葉緑体）
   - 79遺伝子（サンガー法遺伝子を含む）
   - 約400種 
 
 ::: {.notes}
+入力データは全部GenBankからダウンロードした葉緑体シングルコピー遺伝子のシーケンスです。その中に、２種類のデータがあります。一つはサンガー法シーケンスです。本研究にはシダ植物で最もよく使われてきた７つの遺伝子を使っています。これは現在全部でやく５０００種が含まれています。
 
-入力データは全部GenBankからダウンロードした葉緑体DNAシーケンスです。その中に、２種類のデータがあります。一つはサンガー法遺伝子です。本研究にはシダ植物で最もよく使われてきた７つの遺伝子を使っています。これは現在全部でやく５０００種が含まれています。
-
-もう一つのデータは全葉緑体ゲノム由来の遺伝子です。これはサンガー法のデータよりも遺伝子の数がずっと多いのですが、種の数は少ないです：７９遺伝子と約４００種です。
+もう一つのデータは次世代シーケンス、つまり、全葉緑体ゲノム由来のシーケンスです。これはサンガー法のデータよりも遺伝子の数がずっと多いのですが、種の数は少ないです：７９遺伝子と約４００種です。
 :::
 
 ## 種名の統一
 
-- [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) [@Hassler2022] をもとに新しい分類データベース「[pteridocat](https://github.com/fernphy/pteridocat)」を構築
+- [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) [@Hassler2022] をもとに新しい分類<br>データベース「[pteridocat](https://github.com/fernphy/pteridocat)」を構築
 
 - GenBankの種名を[taxastand](https://github.com/joelnitta/taxastand)\* Rパッケージによってpteridocatに統一する
 
@@ -261,7 +262,7 @@ GenBankの種名をtaxastandという、私がこの作業を行うために開�
 
 - all-by-all BLAST [@Camacho2009] をかける
 
-- クエリー（種）が異なる科と一致した場合、誤同定として排除する
+- クエリー（種）が異なる科と一致した場合、誤同定と<br>して排除する
 
 ::: {.small}
 |species|accession|locus|query family| match family |
@@ -294,12 +295,12 @@ Angiopteris_evecta | AY344778 | trnL-trnF | Marattiaceae | Ophioglossaceae
 
 - MAFFTによってシーケンスをアライン
 
-- IQ-TREE [@Nguyen2015] を用いて**葉緑体の系統樹を制約にして**最尤法によって系統樹を推定する
+- IQ-TREE [@Nguyen2015] を用いて**バックボーンツリーを制約にして**最尤法によって系統樹を推定する
 
 - treePL [@Smith2012] によって分岐年代推定を行う
 
 ::: {.notes}
-次には、サンガー法遺伝子を同じようにアラインメントを作って、系統解析を行いますが、一つだけ違うところは、IQ-TREEでは葉緑体の系統樹を制約として使います。こうすることによって、深い分岐点をはっきりと決めることができると同時に、種のサンプリングも最大にすることができます。
+次には、サンガー法遺伝子を同じようにアラインメントを作って、系統解析を行いましたが、一つだけ違ったところは、バックボーンツリーを制約として使いました。こうすることによって、深い分岐点をはっきりと決めることができると同時に、種のサンプリングも最大にすることができました。
 この全体の系統樹が得られたら、treePLによって分岐年代推定を行いました。
 :::
 
@@ -365,9 +366,11 @@ og_tree <- ggtree(tree, branch.length = "none") %<+%
 ::::
 
 ::: {.notes}
-まずは、f全葉緑体によるバックボーンツリーです。ここでは、チップを科で表しています。
+まずは、全葉緑体によるバックボーンツリーです。ここでは、チップを科で表しています。
 
-予想していたように、バックボーンの支持根はとても高いです。番号が振っていない分岐点は全部１００パーセントです。
+左の方の小さな図は、シダ植物と他の陸上植物との関係を表しています。
+
+予想していたように、バックボーンの支持率はとても高いです。番号が振っていない分岐点は全部１００パーセントです。
 
 トポロジーは今までの葉緑体マーカーを使った系統樹とおおまかに一致しました。そして、いくつかその関係について議論があった深い分岐点は綺麗に決まりました（例えば、Aspleniineae）。
 :::
@@ -375,7 +378,7 @@ og_tree <- ggtree(tree, branch.length = "none") %<+%
 ## {background-image="images/cov_tree.png" background-size="contain"}
 
 ::: {.notes}
-次は現在のFern Tree of Life、略してFTOLです。
+次は全体の系統樹です。現在のFern Tree of Life、略してFTOLです。
 
 現存していると思われる12万シダ植物のうち、半分近くの５千５百種が入っています。
 
@@ -518,10 +521,10 @@ ages_shapes <- c(
 )
 
 ages_colors <- c(
-  current = palette_okabe_ito(order = "vermillion"),
-  rothfels = palette_okabe_ito(order = "bluishgreen"),
-  schuettpelz = palette_okabe_ito(order = "blue"),
-  ts = palette_okabe_ito(order = "orange")
+  current = palette_okabe_ito(order = 6), # vermillion
+  rothfels = palette_okabe_ito(order = 2), # bluishgreen
+  schuettpelz = palette_okabe_ito(order = 5), #blue
+  ts = palette_okabe_ito(order = 1) # orange
 )
 
 # Format names of papers for printing for stem family age plots
@@ -616,18 +619,18 @@ ggsave(plot = div_times_plot, file = "images/div_times_plot_raw.png", height = 7
 
 ## [https://fernphy.github.io/](https://fernphy.github.io/)
 
-- データのダウンロード
+- データのダウンロードや可視化
 
-- 系統樹、データの探索
+- 系統樹の更新
 
 ::: {.center}
 ![](images/website.png){height="400"}
 :::
 
 ::: {.notes}
-本研究において特に大事な点は、今回の結果を論文として発表するだけで終わりにするのではなく、どの研究者でも簡単に手に入れて、様々な研究に使えるようにしたいと思いました。
+本研究において特に大事な点は、今回の結果を論文として発表するだけではなく、どの研究者でも簡単に手に入れて、様々な研究に使えるようにしたいと思いました。
 
-そのために、https://fernphy.github.io/でウエブサイトを用意して、ここからデータのダウンロード、系統樹の可視化、サンプルのデータの詳細を見ることなどができます。
+そのために、https://fernphy.github.io/でウエブサイトを用意して、ここからデータのダウンロード、系統樹の可視化、などができます。さらに、ワークフローを定期的に行って、系統樹を更新する予定です。
 :::
 
 ## R パッケージ **ftolr**
@@ -654,7 +657,7 @@ ft_tree(drop_og = TRUE)
 
 ## 自動化とカスタマイズのバランスを取れた「ちょうど良い」アプローチ
 
-- GenBankデータを自動的にダウンロードし、系統樹にする
+- GenBankデータを自動的にダウンロードし、系統樹に<br>する
 
 - シダ植物専用の分類システムを導入
 
@@ -678,9 +681,9 @@ ft_tree(drop_og = TRUE)
 - 将来的に**ファイロゲノミクス**に切り替える
 
 ::: {.notes}
-最後に、これからの予定と目的を説明させていただきたいと思います。
+最後に、これからの予定と目標を説明させていただきたいと思います。
 まずは、FTOLを完成させることです。現在のFTOLはシダ植物の半分弱を含めますが、残りの５０何パーセントを今後加えたいと考えています。
-こうするためには、ずっとGenBankにデータが上がるのを待っているだけでは時間がかかり過ぎますので、今後は自分で新しいシーケンスデータを作る必要があります。特に有効だと思っているのは、植物標本庫に収まっている標本からゲノムスキミングによって葉緑体DNAシーケンスを読む技術です。
+こうするためには、自分で新しいシーケンスデータを加える必要があると思います。特に有効だと思っているのは、植物標本庫に収まっている標本からゲノムスキミングによって葉緑体DNAシーケンスを読む技術です。
 そして、今はまだサンガー法データを使っていますが、より正確な系統樹を得るためにはそのうちファイロゲノミクスに切り替えたいと考えています。
 以上のような大きな目的は一人では無理なので、これからはコラボレーターを募集して、大きなプロジェクトを立ち上げようと考えています。
 :::
