@@ -1,4 +1,105 @@
 references:
+- id: Antonelli2016
+  accessed:
+  - year: 2020
+    month: 6
+    day: 19
+  author:
+  - family: Antonelli
+    given: Alexandre
+  - family: Hettling
+    given: Hannes
+  - family: Condamine
+    given: Fabien L.
+  - family: Vos
+    given: Karin
+  - family: Nilsson
+    given: R. Henrik
+  - family: Sanderson
+    given: Michael J.
+  - family: Sauquet
+    given: Hervé
+  - family: Scharn
+    given: Ruud
+  - family: Silvestro
+    given: Daniele
+  - family: Töpel
+    given: Mats
+  - family: Bacon
+    given: Christine D.
+  - family: Oxelman
+    given: Bengt
+  - family: Vos
+    given: Rutger A.
+  citation-key: Antonelli2016
+  container-title: Systematic Biology
+  container-title-short: Syst Biol
+  DOI: 10.1093/sysbio/syw066
+  ISSN: 1063-5157, 1076-836X
+  issued:
+  - year: 2016
+    month: 9
+    day: 10
+  language: en
+  page: 152–166
+  source: DOI.org (Crossref)
+  title: Toward a self-updating platform for estimating rates of speciation and migration,
+    ages, and relationships of taxa
+  type: article-journal
+  volume: '66'
+- id: Benton2022
+  accessed:
+  - year: 2022
+    month: 3
+    day: 30
+  author:
+  - family: Benton
+    given: Michael J.
+  - family: Wilf
+    given: Peter
+  - family: Sauquet
+    given: Hervé
+  citation-key: Benton2022
+  container-title: New Phytologist
+  container-title-short: New Phytologist
+  DOI: 10.1111/nph.17822
+  ISSN: 0028-646X, 1469-8137
+  issue: '5'
+  issued:
+  - year: 2022
+    month: 3
+  language: en
+  page: 2017-2035
+  source: DOI.org (Crossref)
+  title: The Angiosperm terrestrial revolution and the origins of modern biodiversity
+  type: article-journal
+  volume: '233'
+- id: Camacho2009
+  author:
+  - family: Camacho
+    given: C
+  - family: Coulouris
+    given: G
+  - family: Avagyan
+    given: V
+  - family: Ma
+    given: 'N'
+  - family: Papadopoulos
+    given: J
+  - family: Bealer
+    given: K
+  - family: Madden
+    given: T
+  citation-key: Camacho2009
+  container-title: BMC Bioinformatics
+  issue: '1'
+  issued:
+  - year: 2009
+  page: '421'
+  title: 'BLAST+: architecture and applications'
+  type: article-journal
+  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1417
+  volume: '10'
 - id: Gauthier2019
   accessed:
   - year: 2022
@@ -88,80 +189,6 @@ references:
   page: '201423041'
   title: Synthesis of phylogeny and taxonomy into a comprehensive tree of life
   type: article-journal
-- id: Antonelli2016
-  accessed:
-  - year: 2020
-    month: 6
-    day: 19
-  author:
-  - family: Antonelli
-    given: Alexandre
-  - family: Hettling
-    given: Hannes
-  - family: Condamine
-    given: Fabien L.
-  - family: Vos
-    given: Karin
-  - family: Nilsson
-    given: R. Henrik
-  - family: Sanderson
-    given: Michael J.
-  - family: Sauquet
-    given: Hervé
-  - family: Scharn
-    given: Ruud
-  - family: Silvestro
-    given: Daniele
-  - family: Töpel
-    given: Mats
-  - family: Bacon
-    given: Christine D.
-  - family: Oxelman
-    given: Bengt
-  - family: Vos
-    given: Rutger A.
-  citation-key: Antonelli2016
-  container-title: Systematic Biology
-  container-title-short: Syst Biol
-  DOI: 10.1093/sysbio/syw066
-  ISSN: 1063-5157, 1076-836X
-  issued:
-  - year: 2016
-    month: 9
-    day: 10
-  language: en
-  page: 152–166
-  source: DOI.org (Crossref)
-  title: Toward a self-updating platform for estimating rates of speciation and migration,
-    ages, and relationships of taxa
-  type: article-journal
-  volume: '66'
-- id: Camacho2009
-  author:
-  - family: Camacho
-    given: C
-  - family: Coulouris
-    given: G
-  - family: Avagyan
-    given: V
-  - family: Ma
-    given: 'N'
-  - family: Papadopoulos
-    given: J
-  - family: Bealer
-    given: K
-  - family: Madden
-    given: T
-  citation-key: Camacho2009
-  container-title: BMC Bioinformatics
-  issue: '1'
-  issued:
-  - year: 2009
-  page: '421'
-  title: 'BLAST+: architecture and applications'
-  type: article-journal
-  URL: papers://ebd7d3df-d8f1-4be8-bcf7-4fb07ababf30/Paper/p1417
-  volume: '10'
 - id: Katoh2002
   author:
   - family: Katoh
@@ -185,31 +212,6 @@ references:
     Fourier transform'
   type: article-journal
   volume: '30'
-- id: Landau2021
-  accessed:
-  - year: 2021
-    month: 2
-    day: 1
-  author:
-  - family: Landau
-    given: William Michael
-  citation-key: Landau2021
-  container-title: Journal of Open Source Software
-  DOI: 10.21105/joss.02959
-  ISSN: 2475-9066
-  issue: '57'
-  issued:
-  - year: 2021
-    month: 1
-    day: 15
-  language: en
-  page: '2959'
-  source: joss.theoj.org
-  title: 'The targets R package: A dynamic Make-like function-oriented pipeline toolkit
-    for reproducibility and high-performance computing'
-  title-short: The targets R package
-  type: article-journal
-  volume: '6'
 - id: Nguyen2015
   author:
   - family: Nguyen
@@ -262,6 +264,85 @@ references:
   title-short: SuperCRUNCH
   type: article-journal
   volume: '11'
+- id: Rothfels2015a
+  author:
+  - family: Rothfels
+    given: Carl J.
+  - family: Li
+    given: Fay-Wei
+  - family: Sigel
+    given: Erin M
+  - family: Huiet
+    given: Layne
+  - family: Larsson
+    given: Anders
+  - family: Burge
+    given: Dylan O.
+  - family: Ruhsam
+    given: Markus
+  - family: Deyholos
+    given: Michael
+  - family: Soltis
+    given: Douglas E.
+  - family: Stewart
+    given: C. N.
+  - family: Shaw
+    given: Shane W.
+  - family: Pokorny
+    given: Lisa
+  - family: Chen
+    given: Tao
+  - family: DePamphilis
+    given: Claude
+  - family: DeGironimo
+    given: Lisa
+  - family: Chen
+    given: Li
+  - family: Wei
+    given: Xiaofeng
+  - family: Sun
+    given: Xiao
+  - family: Korall
+    given: Petra
+  - family: Stevenson
+    given: Dennis W.
+  - family: Graham
+    given: Sean W.
+  - family: Wong
+    given: G. K.-S.
+  - family: Pryer
+    given: Kathleen M
+  citation-key: Rothfels2015a
+  container-title: American Journal of Botany
+  DOI: 10.3732/ajb.1500089
+  ISSN: 0002-9122
+  issue: '7'
+  issued:
+  - year: 2015
+  page: 1-19
+  title: The evolutionary history of ferns inferred from 25 low-copy nuclear genes
+  type: article-journal
+  volume: '102'
+- id: Schuettpelz2009
+  author:
+  - family: Schuettpelz
+    given: Eric
+  - family: Pryer
+    given: Kathleen M
+  citation-key: Schuettpelz2009
+  container-title: Proceedings of the National Academy of Sciences of the United States
+    of America
+  DOI: 10.1073/pnas.0811136106
+  ISSN: 1091-6490
+  issue: '27'
+  issued:
+  - year: 2009
+    month: 7
+  page: 11200-11205
+  PMID: '19567832'
+  title: Evidence for a Cenozoic radiation of ferns in an angiosperm-dominated canopy
+  type: article-journal
+  volume: '106'
 - id: Smith2012
   author:
   - family: Smith

@@ -4,7 +4,7 @@ format:
     slide-level: 2
     bibliography:
       - references.yaml
-      - references_other.yaml
+      - references_other.yaml 
     csl: ecology.csl
     reference-location: document
     css: styles.css
@@ -25,6 +25,11 @@ library(patchwork)
 library(tidyverse)
 library(ape)
 library(fontawesome)
+library(glue)
+library(ggokabeito)
+library(deeptime)
+library(ggimage)
+library(geiger)
 ```
 
 # Introduction {visibility="hidden"}
@@ -49,6 +54,12 @@ library(fontawesome)
 :::
 
 ::::
+
+::: {.notes}
+東京大学のニッタジョエルです。どうぞよろしくお願いします。
+私はシダ植物の進化を様々面から研究してきました。
+本日の発表では今まで最も大きなシダ植物の系統樹を作る試みについて、紹介したいと思います。
+:::
 
 ## 全生物の系統樹の構築：ダーウィン以来の大きな目的
 
@@ -112,9 +123,9 @@ Darwin (1837)
 
 ## 問題その１：性能とスケーラビリティのトレードオフ
 
-- どんな自動的なパイプラインでも、いくつかの**前提**や**単純化**がある
+- どんな自動的なパイプラインでも、いくつかの**前提**や<br>**単純化**がある
 
-- 一方で、手動でシーケンスを全部確認すればより正確な系統樹が得られるはだが、**データが大量にあると現実的ではない**
+- 一方で、手動でシーケンスを全部確認すればより正確な系統樹が得られるはずだが、**データが大量にあると現実的ではない**
 
 ::: {.r-stack}
 ![](images/balance.png){height="300"}
@@ -126,7 +137,7 @@ Darwin (1837)
 一方で、シーケンスを一つ一つマニュアルに確かめることができたら、より正確な系統樹が得られるはずですが、ビッグデータだとそのようなことは無理があります。
 :::
 
-## 問題その２：すぐに古くなってしまう
+## 問題その２：すぐに古くなって<br>しまう
 
 - GenBankのデータの著しい増加によって系統樹が**すぐに古くなってしまう**
 
@@ -140,7 +151,7 @@ Darwin (1837)
 
 ## 本研究の試み：自動化とカスタマイズを両方取り入れる
 
-本研究の目的：**シダ植物**の最も種数の多い、分類学的に高性能な**系統樹を自動的に作るシステムの開発**
+本研究の目的：**シダ植物**を用いて、**分類学的に高精度**で**種数の多い**系統樹を自動的に作るシステムを開発
 
 ::: {.r-stack}
 ![](images/conveyer.png){height="300"}
@@ -149,17 +160,18 @@ Darwin (1837)
 ::: {.notes}
 そこで、本研究では、自動化とパイプラインのカスタマイズを両方取り入れることにしてみました。
 
-本研究の目的は**シダ植物**の最も種数の多い、分類学的に高性能な**系統樹を自動的に作るシステムの開発**です。
+本研究の目的は**シダ植物**を用いて、**分類学的に高精度**で**種数の多い**系統樹を自動的に作るシステムを開発することです
+
 :::
 
 ## なぜシダ？
 
-多様で、生態学的に重要な役割を果たしている植物
+**多様**で、**生態学的に重要**な役割を果たしている植物
 
 被子植物と比べて、**調べやすい**：
 
-- シダ植物：約1万2千種、そのうち4-5割のシーケンスあり
-- 被子植物：約35万種、2割のシーケンスあり
+- シダ植物：約1万2千種、うち4-5割のシーケンスあり
+- 被子植物：約35万種、2-3割のシーケンスあり
 
 ::: {.r-stack}
 ![](images/ferns.png){height="300"}
@@ -167,34 +179,33 @@ Darwin (1837)
 
 ::: {.notes}
 なぜシダ植物を選んだかと言いますと、シダ植物は陸上植物の中で被子植物に次いで２番目に大きな系統群で、様々な環境に生育し、生物多様性の観点から見ると非常に重要なグループです。
-また、シダ植物は被子植物と比べて全体の種数が少ないため、比較的に調べやすい研究対象です。被子植物の約35万種に対して、シダ植物は約1万２千種しか存在しておらず、そのうち約40から50パーセントはシーケンスデータが公開されているので、全体の系統樹を作るのに適した対象です。
+また、シダ植物は被子植物と比べて全体の種数が少ないため、比較的に調べやすい研究対象です。被子植物の約35万種に対して、シダ植物は約1万２千種しか存在しておらず、そのうち約40から50パーセントはシーケンスデータが公開されているので、種レベルで地球規模の系統樹を作るのに適した材料です。
 :::
 
 # 方法 
 
 ---
 
-## GenBankのデータマイニング
+## GenBankのデータマイニング：シダ植物の葉緑体遺伝子
 
 ### サンガー法データ
   - ７つの遺伝子
   - 約5,100種
 
 ### 次世代シーケンサーデータ
-  - 79遺伝子
+  - 79遺伝子（サンガー法遺伝子を含む）
   - 約400種 
 
-::: {.notes}	
-入力データは２種類あります。一つはサンガー法遺伝子です。本研究にはシダ植物で最もよく使われてきた７つの遺伝子を使っています。これは現在全部でやく５０００種が含まれています。
+::: {.notes}
+
+入力データは全部GenBankからダウンロードした葉緑体DNAシーケンスです。その中に、２種類のデータがあります。一つはサンガー法遺伝子です。本研究にはシダ植物で最もよく使われてきた７つの遺伝子を使っています。これは現在全部でやく５０００種が含まれています。
 
 もう一つのデータは全葉緑体ゲノム由来の遺伝子です。これはサンガー法のデータよりも遺伝子の数がずっと多いのですが、種の数は少ないです：７９遺伝子と約４００種です。
-
-データは全部GenBankからダウンロードしました。
 :::
 
 ## 種名の統一
 
-- [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) [@Hassler2022]をもとに新しい分類データベース「[pteridocat](https://github.com/fernphy/pteridocat)」を構築
+- [World Ferns](https://www.worldplants.de/world-ferns/ferns-and-lycophytes-list) [@Hassler2022] をもとに新しい分類データベース「[pteridocat](https://github.com/fernphy/pteridocat)」を構築
 
 - GenBankの種名を[taxastand](https://github.com/joelnitta/taxastand)\* Rパッケージによってpteridocatに統一する
 
@@ -248,7 +259,7 @@ GenBankの種名をtaxastandという、私がこの作業を行うために開�
 
 ## 自動的な種の誤同定の排除
 
-- all-by-all BLAST [@Camacho2009]　をかける
+- all-by-all BLAST [@Camacho2009] をかける
 
 - クエリー（種）が異なる科と一致した場合、誤同定として排除する
 
@@ -258,7 +269,7 @@ GenBankの種名をtaxastandという、私がこの作業を行うために開�
 Abacopteris_gymnopteridifrons | JF303974 | rbcL | Thelypteridaceae | Athyriaceae
 Angiopteris_evecta | AY344778 | trnL-trnF | Marattiaceae | Ophioglossaceae
 ...
-(合計：７０)
+(合計：７０件)
 :::
 
 ::: {.notes}	
@@ -268,11 +279,11 @@ Angiopteris_evecta | AY344778 | trnL-trnF | Marattiaceae | Ophioglossaceae
 検索の結果でクエリーが違う科と一致した場合、そのシーケンスを種の誤同定とし、解析から排除しました。
 :::
 
-## 系統解析：バックボーン
+## 系統解析：バックボーンツリー
 
 - MAFFTによってシーケンスをアライン [@Katoh2002]
 
-- IQ-TREE [@Nguyen2015]において最尤法によって系統樹を推定する
+- IQ-TREE [@Nguyen2015] において最尤法によって系統樹を推定する
 
 ::: {.notes}	
 上のデータクリーニングができたら、系統解析に入りました。
@@ -283,25 +294,68 @@ Angiopteris_evecta | AY344778 | trnL-trnF | Marattiaceae | Ophioglossaceae
 
 - MAFFTによってシーケンスをアライン
 
-- IQ-TREE [@Nguyen2015]において**葉緑体の系統樹を制約にして**最尤法によって系統樹を推定する
+- IQ-TREE [@Nguyen2015] を用いて**葉緑体の系統樹を制約にして**最尤法によって系統樹を推定する
 
-- treePL [@Smith2012]によって分岐年代推定を行う
+- treePL [@Smith2012] によって分岐年代推定を行う
 
-::: {.notes}	
+::: {.notes}
 次には、サンガー法遺伝子を同じようにアラインメントを作って、系統解析を行いますが、一つだけ違うところは、IQ-TREEでは葉緑体の系統樹を制約として使います。こうすることによって、深い分岐点をはっきりと決めることができると同時に、種のサンプリングも最大にすることができます。
 この全体の系統樹が得られたら、treePLによって分岐年代推定を行いました。
 :::
 
 # 結果
 
-## バックボーンが綺麗に<br>決まる
+## バックボーンが綺麗に<br>決まった
+
+```{r}
+#| label: og-tree-make
+#| cache: true
+#| echo: false
+#| message: false
+
+# Make overall tree showing relation of ferns to other plants
+
+tree <- ftolr::ft_tree(drop_og = FALSE, branch_len = "ultra")
+tree <- rescaleTree(tree, 100)
+
+plant_data <- tibble(
+  species = c(
+  "Marchantia_polymorpha", "Physcomitrium_patens",
+  "Anthoceros_angustus", "Selaginella_moellendorffii",
+  "Acrostichum_danaeifolium", "Ginkgo_biloba", "Magnolia_tripetala"),
+  ja_name = c(
+    "タイ類", "セン類", "ツノゴケ類", "小葉類", "シダ類", "裸子植物", "被子植物"
+  )
+) %>%
+  mutate(is_fern = if_else(species == "Acrostichum_danaeifolium", "yes", "no"))
+
+tree <- ape::keep.tip(tree, plant_data$species)
+
+og_tree <- ggtree(tree, branch.length = "none") %<+% 
+  plant_data +
+  expand_limits(x = 7) +
+  geom_tiplab(
+    aes(label = ja_name, fill = is_fern), family = "HiraKakuPro-W3",
+    parse = TRUE, geom = "label", size = 5) +
+  scale_fill_manual(
+    values = c(
+      yes = "yellow",
+      no = "white"
+    )
+  ) +
+  theme(legend.position = "none") +
+  annotate(
+    "text", x = 1.5, y = 7, label = "他の陸上植物との関係", family = "HiraKakuPro-W3", size = 7)
+```
 
 :::: {.columns}
 
 ::: {.column width="50%"}
-- 分岐点の93%が100%支持
+- 93%の分岐点が100%支持
 
-- 議論のあった分岐点も綺麗に決まる
+- 議論のあった分岐点も綺麗に決まった
+
+![](images/og_tree.png){.absolute bottom=0 left=10 height="300"}
 :::
 
 ::: {.column width="50%"}
@@ -326,6 +380,12 @@ Angiopteris_evecta | AY344778 | trnL-trnF | Marattiaceae | Ophioglossaceae
 現存していると思われる12万シダ植物のうち、半分近くの５千５百種が入っています。
 
 これは今までの一番大きな系統樹と比べて約４０パーセントの増加になります。
+:::
+
+## {background-image="images/bs_tree.png" background-size="contain"}
+
+::: {.notes}
+また、バックボーンだけでなく、系統樹全体に高い支持率が得られましたので、これは信頼できる系統樹であることが示唆されました。
 :::
 
 ```{r}
@@ -409,31 +469,150 @@ ggsave(
 
 ## 分岐年代の<br>再評価
 
-:::: {.columns}
-
-::: {.column width="40%"}
 - 化石の校正点51点（今までの**倍近く**）
 
+::: {.notes}
+本研究の大きな発見の一つは、シダ植物の種文化のタイミングです。今までの研究は分岐年代推定に２０個程度の化石を使ってきましたが、今回の研究では、化石の文献を再評価した結果、今までの倍の５０個の化石を使うことができました。
+:::
+
+## 分岐年代の<br>再評価
+
+```{r}
+#| label: div-times-make
+#| cache: true
+#| echo: false
+#| message: false
+
+# Plot stem ages of polypods
+
+# Combine family stem ages into almost-long format:
+# one row per family/study combination,
+# cols for median, high, and low date
+all_family_stem_ages <- readRDS("data/all_family_stem_ages.RDS") %>%
+  # Filter to only polypods
+  mutate(polypod = if_else(
+    major_clade %in% c(
+      "Aspleniineae", "Dennstaedtiineae", "Lindsaeineae",
+      "Polypodiineae", "Pteridineae", "Saccolomatineae"),
+      TRUE,
+      FALSE
+  )) %>%
+  filter(polypod)
+
+# Format y-axis text: show major clade in parentheses
+family_labs_tbl <-
+  all_family_stem_ages %>%
+  select(family, code) %>%
+  unique() %>%
+  mutate(label = glue("{family} ({code})"))
+
+family_labs <- family_labs_tbl$label %>%
+  set_names(., family_labs_tbl$family)
+
+# Define shapes and colors for points for stem family age plots
+ages_shapes <- c(
+  current = 16, # circle
+  rothfels = 17, # triangle
+  schuettpelz = 15, # square
+  ts = 18 # diamond
+)
+
+ages_colors <- c(
+  current = palette_okabe_ito(order = "vermillion"),
+  rothfels = palette_okabe_ito(order = "bluishgreen"),
+  schuettpelz = palette_okabe_ito(order = "blue"),
+  ts = palette_okabe_ito(order = "orange")
+)
+
+# Format names of papers for printing for stem family age plots
+ages_sampling <-
+  tribble(
+    ~source, ~year, ~label,
+    "schuettpelz", 2009, "Schuettpelz and Pryer 2009",
+    "rothfels", 2015, "Rothfels et al. 2015",
+    "ts", 2016, "Testo and Sundue 2016",
+    "current", 2021, "**This study**",
+  ) %>%
+  mutate(source = fct_reorder(source, year))
+
+# Fetch phylopic for flowering plant, specify where to plot
+ppic_data <- phylopic_uid("Chamaemelum fuscatum") %>%
+  mutate(x = 75, y = "Cystodiaceae")
+
+# Make plot
+div_times_plot <-
+  ggplot(all_family_stem_ages) +
+  # Use negative values because scale_x_reverse
+  geom_rect(ymin = -Inf, ymax = Inf, xmin = -100, xmax = -50, fill = "grey80") +
+  geom_pointrange(
+    aes(
+      x = median, xmin = low, xmax = high,
+      y = family,
+      color = author, shape = author),
+    position = position_dodge(width = 0.5)) +
+  scale_shape_manual(
+    values = ages_shapes,
+    limits = ages_sampling$source, 
+    labels = ages_sampling$label) +
+  scale_color_manual(
+    values = ages_colors,
+    limits = ages_sampling$source, 
+    labels = ages_sampling$label) +
+  scale_y_discrete(labels = family_labs, expand = expansion(add = 0.7)) +
+  geom_phylopic(data = ppic_data, aes(image = uid, x = x, y = y), size = 0.08) +
+  scale_x_reverse("Age (millions of years)", expand = c(0,0)) +
+  coord_geo(
+    dat = list("periods", "eras"),
+    pos = list("b", "b"),
+    abbrv = list(TRUE, FALSE),
+    xlim = c(300, 0),
+    fill = "transparent",
+    color = "grey20",
+    lab_color = "grey30",
+    height = unit(1, "lines"),
+    expand = TRUE,
+    size = 3) +
+  guides(shape = guide_legend(nrow = 2)) +
+  theme_bw() +
+  theme(
+    axis.title.y = element_blank(),
+    legend.title = element_blank(),
+    legend.text = element_markdown(size = 14),
+    legend.position = "bottom"
+  )
+
+ggsave(plot = div_times_plot, file = "images/div_times_plot_raw.png", height = 7, width = 7, units = "in")
+```
+
+:::: {.columns}
+
+::: {.column width="35%"}
 - 多くの科の分岐年代を約１〜３千万年より古いと推定
 
-- シダ植物は被子植物の「影」で進化したわけではない？
+- 被子植物の「影」で進化したわけではない？
+:::
+
+::: {.column width="5%"}
 :::
 
 ::: {.column width="60%"}
-![](images/stem_ages.png){.absolute top=0 left=400 height="700"}
+![](images/div_times_plot.png){.absolute top=20 left=400 height="700"}
 :::
 
 ::::
 
 ::: {.notes}	
-また、本研究の大きな発見は、シダ植物の種文化のタイミングです。今までの研究は分岐年代推定に２０個程度の化石を使ってきましたが、今回の研究では、化石の文献を再評価した結果、今までの倍の５０個の化石を使うことができました。
-
 その結果、多くのシダ植物の科の分岐年代は今までの研究よりも約１千万から３千万くらい古いことが示唆されました。
 
-２０００年代初期に最初の植物の分子年代推定の論文が出た時以来、現在のシダ植物が被子植物の後に多様化した、いわゆる「ferns diversified in the shadow of angiosperms」仮説がずっと主流になっていましたが、今回の大きな系統樹を含めて、化石とサンプルを増やすことによってシダ植物の多様化が被子植物と同じくらい、あるいはもっと古かったかもしれないという可能性が高くなってきています。
+２０００年代初期に最初の植物の分子年代推定の論文が出た時以来、現在のシダ植物の最も大きなグループであるウラボシ目が被子植物の後に多様化した、いわゆる「ferns diversified in the shadow of angiosperms」仮説がずっと主流になっていましたが、今回の大きな系統樹を含めて、化石とサンプルを増やすことによってシダ植物の多様化が被子植物のそれと同じくらい、あるいはもっと古かったかもしれないという可能性が高くなってきています。
 
 なお、この結果はtreePLという、割とシンプルな解析に基づいているので、今後はより高精度なツールでも調べる予定です。
 :::
+
+::: aside
+灰色ボックス = Angiosperm terrestrial<br>revolution [@Benton2022]
+:::
+
 
 ## [https://fernphy.github.io/](https://fernphy.github.io/)
 
@@ -455,7 +634,7 @@ ggsave(
 
 [https://github.com/fernphy/ftolr](https://github.com/fernphy/ftolr){preview-link="true"}
 
-- 直接Rに系統樹やアラインメントを読み込む
+- 直接Rに系統樹やアラインメントを読 み込む
 
 - 外群の有無などのオプション
 
@@ -490,18 +669,20 @@ ft_tree(drop_og = TRUE)
 そして、シダ植物だけではなく、今回のアプローチは他の生物のグループでも応用できるのではないかと考えています。
 :::
 
-## 今後の予定・目的
+## 今後の予定・目標
 
 - **FTOLを完成させる**
    
    - 植物標本庫に収まっている標本のゲノムスキミング
     
-- そのうち、**ファイロゲノミクス**に切り替える
+- 将来的に**ファイロゲノミクス**に切り替える
 
 ::: {.notes}
 最後に、これからの予定と目的を説明させていただきたいと思います。
-まずは、FTOLを完成させることです。現在のFTOLはシダ植物の半分弱を含めますが、残りの５０何パーセントを今後加えたいと考えています。こうするためには、ずっとGenBankにデータが上がるのを待っているだけでは時間がかかり過ぎますので、今後は自分で新しいシーケンスデータを作る必要があります。特に有効だと思っているのは、植物標本庫に収まっている標本からゲノムスキミングによって葉緑体DNAシーケンスを読む技術です。
+まずは、FTOLを完成させることです。現在のFTOLはシダ植物の半分弱を含めますが、残りの５０何パーセントを今後加えたいと考えています。
+こうするためには、ずっとGenBankにデータが上がるのを待っているだけでは時間がかかり過ぎますので、今後は自分で新しいシーケンスデータを作る必要があります。特に有効だと思っているのは、植物標本庫に収まっている標本からゲノムスキミングによって葉緑体DNAシーケンスを読む技術です。
 そして、今はまだサンガー法データを使っていますが、より正確な系統樹を得るためにはそのうちファイロゲノミクスに切り替えたいと考えています。
+以上のような大きな目的は一人では無理なので、これからはコラボレーターを募集して、大きなプロジェクトを立ち上げようと考えています。
 :::
 
 ## 謝辞
@@ -522,8 +703,18 @@ ft_tree(drop_og = TRUE)
 以上です。本研究はたくさんの方々のご協力によってできました。この場をお借りして深く御礼を申し上げます。ありがとうございます。そして、皆んな様のご清聴をどうもありがとうございます。
 :::
 
+## 全体のまとめ
+
+- **自動化とカスタマイズ**のバランスを取れた「ちょうど良い」アプローチ
+
+- 他の生物でも**同様にできる**
+
+- これからは**FTOLを完成させる**ことを目指す
+
 ## hidden refs {visibility="hidden"}
 
 [@Testo2016a]
+[@Schuettpelz2009]
+[@Rothfels2015a]
 
 ## References {.scrollable}
