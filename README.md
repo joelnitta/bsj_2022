@@ -1,10 +1,10 @@
 # botany_2022_ftol
 
-Slides for [24th Annual Meeting of the Society for Evolutionary Studies, Japan (SESJ)](http://www.saitou-naruya-laboratory.org/meetings/SESJ_2022_Numazu_english.html) presentation, "An Open and Continuously Updated Fern Tree of Life (FTOL)" by Nitta et al.
+Slides for [86th Annual Meeting of the Botanical Society of Japan (BSJ)](http://bsj.or.jp/bsj86/) presentation, "An Open and Continuously Updated Fern Tree of Life (FTOL)" by Nitta et al.
 
-Rendered slides are here: https://joelnitta.github.io/shinka_2022/
+Rendered slides are here: https://joelnitta.github.io/bjs_2022/
 
-Preprint for the FTOL paper is here: https://doi.org/10.1101/2022.03.31.486640
+The FTOL paper is here: https://doi.org/10.3389/fpls.2022.909768
 
 ## License
 
