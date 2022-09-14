@@ -69,6 +69,10 @@ library(geiger)
 [https://doi.org/10.3389/fpls.2022.909768](https://doi.org/10.3389/fpls.2022.909768)
 :::
 
+::: {.notes}
+本日発表する内容はちょうど先月論文として公開されましたので、ご興味の方は是非ご覧になってください。オープンアクセスので、どなたでもウエブから読むことができます。
+:::
+
 ## 系統樹は生物学に<br>不可欠
 
 :::: {.columns}
@@ -111,7 +115,7 @@ APGより
 ::: {.column width="30%"}
 - DNAシーケンスデータが**日々貯まる**
 
-- 「最新」の系統樹を今日構築して発表しても、**明日には古くなってしまう**
+- 「最新」の系統樹を今日構築して発表しても、**明日には古く<br>なってしまう**
 
 - 自動的に**最新の状態を保つ系統樹が望ましい**
 
@@ -137,14 +141,20 @@ APGより
 
 ## 本研究の目的
 
-**シダ植物**を用いて、**分類学的に高精度**で<br>**種数の多い**系統樹を自動的に作るシステムを開発
+**シダ植物**\*を用いて、**分類学的に高精度**で<br>**種数の多い**系統樹を自動的に作るシステムを開発
 
 ::: {.r-stack}
-![](images/conveyer.png){height="300"}
+![](images/ferns.png){height="300"}
+:::
+
+::: aside
+\*本発表でいう「シダ植物」はシダ類を指しています
 :::
 
 ::: {.notes}
-そこで、本研究の目的は**シダ植物**を用いて、**分類学的に高精度**で**種数の多い**系統樹を自動的に作るシステムを開発することです
+そこで、本研究の目的は**シダ植物**を用いて、**分類学的に高精度**で**種数の多い**系統樹を自動的に作るシステムを開発することです。
+
+ちなみに、発表では「シダ植物」と呼んでいますが、本研究は小葉類を扱っていませんので、ここでいう「シダ植物」はシダ類だけを意味しています。
 :::
 
 # 方法 
@@ -299,19 +309,27 @@ tree <- ape::keep.tip(tree, plant_data$species)
 
 og_tree <- ggtree(tree, branch.length = "none") %<+% 
   plant_data +
-  expand_limits(x = 7) +
+  expand_limits(x = 8) +
   geom_tiplab(
-    aes(label = ja_name, fill = is_fern), family = "HiraKakuPro-W3",
-    parse = TRUE, geom = "label", size = 5) +
+    aes(subset = node == 1, label = ja_name), family = "YuGo-Bold",
+    parse = TRUE, geom = "text", size = 14, color = "black"
+    ) +
+  geom_tiplab(
+    aes(subset = node != 1, label = ja_name), family = "YuGo-Medium",
+    parse = TRUE, geom = "text", size = 14, color = "grey30"
+  ) +
   scale_fill_manual(
     values = c(
       yes = "yellow",
       no = "white"
     )
   ) +
-  theme(legend.position = "none") +
-  annotate(
-    "text", x = 1.5, y = 7, label = "他の陸上植物との関係", family = "HiraKakuPro-W3", size = 7)
+  theme(legend.position = "none")
+
+# To print tree, first run
+# options(vsc.dev.args = list(width = 800, height = 800))
+# to increase preview resolution
+# then copy path to preview image, and save as images/og_tree.png
 ```
 
 :::: {.columns}
@@ -321,7 +339,7 @@ og_tree <- ggtree(tree, branch.length = "none") %<+%
 
 - 議論のあった分岐点も綺麗に決まった
 
-![](images/og_tree.png){.absolute bottom=0 left=10 height="300"}
+![](images/og_tree.png){.absolute bottom=5 left=10 height="320"}
 :::
 
 ::: {.column width="50%"}
@@ -440,7 +458,7 @@ ggsave(
 - 化石の校正点51点（今までの**倍近く**）
 
 ::: {.notes}
-本研究の大きな発見の一つは、シダ植物の種文化のタイミングです。今までの研究は分岐年代推定に２０個程度の化石を使ってきましたが、今回の研究では、化石の文献を再評価した結果、今までの倍の５０個の化石を使うことができました。
+本研究の大きな発見の一つは、シダ植物の種分化のタイミングです。今までの研究は分岐年代推定に２０個程度の化石を使ってきましたが、今回の研究では、化石の文献を再評価した結果、今までの倍の５０個の化石を使うことができました。
 :::
 
 ## 分岐年代の<br>再評価
@@ -596,7 +614,7 @@ ggsave(plot = div_times_plot, file = "images/div_times_plot_raw.png", height = 7
 :::
 
 ::: {.notes}
-ということで、本研究は今まで一番種数の多いシダ植物系統樹を作ることができました。
+ということで、\* 本研究は今まで一番種数の多いシダ植物系統樹を作ることができました。
 しかし、この論文を発表して、終わりにする予定ではありません。
 :::
 
@@ -613,7 +631,7 @@ ggsave(plot = div_times_plot, file = "images/div_times_plot_raw.png", height = 7
 ::: {.notes}
 まず、本研究において特に大事な点は、どの研究者でも簡単に系統樹を手に入れて、様々な研究に使えるようにしたいと思いました。
 
-そのために、https://fernphy.github.io/でウエブサイトを用意して、ここからデータのダウンロード、系統樹の可視化、などができます。さらに、ワークフローを定期的に行って、系統樹を更新する予定です。
+そのために、https://fernphy.github.io/でウエブサイトを用意して、ここからデータのダウンロード、系統樹の可視化、などができます。
 :::
 
 ## R パッケージ **ftolr**
@@ -644,14 +662,12 @@ ft_tree(drop_og = TRUE)
 - `v1.2.0`（構築中）
   - ４０点の全葉緑体サンプルを加える
   - バックボーンツリーをより正確に
-  - 分岐年代推定方法を変える（treePLからRelDateに）
 
 ::: {.notes}
 そして、これからもこの系統樹を常に更新していく予定です。
 毎回バージョンが上がると様々な更新の点があります。
 例えば、バージョン１.１.０ではヒメシダの専門家に相談して、その科の分類を大幅に直しました。
 次のバージョン1.2.0では、４０点ほどの全葉緑体サンプルが加わる予定です。そうすることによって、バックボーンツリーがより正確になると思われます。
-そして、データだけではなく、方法も改善していく予定です。例えば、次のバージョンでは分岐年代推定の方法をtreePLからRelDateに変えようと考えています。後者の方が最近の論文によるとより正確ですから。
 このように、FTOLは常に更新され、常に改善されていくことになっています。
 :::
 
