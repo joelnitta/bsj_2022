@@ -69,6 +69,8 @@ library(geiger)
 [https://doi.org/10.3389/fpls.2022.909768](https://doi.org/10.3389/fpls.2022.909768)
 :::
 
+![](images/ftol_paper_qr.png){.absolute bottom=30 right=20 height="175"}
+
 ::: {.notes}
 本日発表する内容はちょうど先月論文として公開されましたので、ご興味の方は是非ご覧になってください。オープンアクセスので、どなたでもウエブから読むことができます。
 :::
