@@ -630,6 +630,8 @@ ggsave(plot = div_times_plot, file = "images/div_times_plot_raw.png", height = 7
 ![](images/website.png){height="400"}
 :::
 
+![](images/ftol_site_qr.png){.absolute top=0 right=0 height="175"}
+
 ::: {.notes}
 まず、本研究において特に大事な点は、どの研究者でも簡単に系統樹を手に入れて、様々な研究に使えるようにしたいと思いました。
 
@@ -651,6 +653,8 @@ ggsave(plot = div_times_plot, file = "images/div_times_plot_raw.png", height = 7
 library(ftolr)
 ft_tree(drop_og = TRUE)
 ```
+
+![](images/ftolr_qr.png){.absolute top=0 right=0 height="175"}
 
 ::: {.notes}
 また、Rで簡単に使えるように、ftolrというRパッケージも用意しました。ftolrによってRに直接系統樹やアラインメントなどを読み込むことができます。また、外群の有無など、様々なカスタマイズもできます。
@@ -730,11 +734,15 @@ ft_tree(drop_og = TRUE)
 
 - **自動化とカスタマイズ**のバランスを取れた「ちょうど良い」アプローチ
 
-- [https://github.com/fernphy/ftolr](https://github.com/fernphy/ftolr)にて常に更新、公開
+- [https://fernphy.github.io/](https://fernphy.github.io/)にて常に更新、公開
 
 - 他の生物でも**同様にできる**
 
 - これからは**FTOLを完成させる**ことを目指す
+
+::: {.center}
+![](images/ftol_site_qr.png){height="250"}
+:::
 
 ## hidden refs {visibility="hidden"}
 
