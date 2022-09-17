@@ -65,9 +65,9 @@ library(geiger)
 
 ::: {.center}
 ![](images/frontiers.png)
+:::
 
 [https://doi.org/10.3389/fpls.2022.909768](https://doi.org/10.3389/fpls.2022.909768)
-:::
 
 ![](images/ftol_paper_qr.png){.absolute bottom=30 right=20 height="175"}
 
